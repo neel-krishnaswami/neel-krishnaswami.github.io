@@ -1,0 +1,457 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!-- Created by htmlize-1.36 in css mode. -->
+<html>
+  <head>
+    <title>test7.js</title>
+    <style type="text/css">
+    <!--
+      body {
+        color: #ffffff;
+        background-color: #2f4f4f;
+      }
+      .constant {
+        /* font-lock-constant-face */
+        color: #7fffd4;
+      }
+      .keyword {
+        /* font-lock-keyword-face */
+        color: #00ffff;
+      }
+      .string {
+        /* font-lock-string-face */
+        color: #ffa07a;
+      }
+      .type {
+        /* font-lock-type-face */
+        color: #98fb98;
+      }
+      .variable-name {
+        /* font-lock-variable-name-face */
+        color: #eedd82;
+      }
+
+      a {
+        color: inherit;
+        background-color: inherit;
+        font: inherit;
+        text-decoration: inherit;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    -->
+    </style>
+  </head>
+  <body>
+    <pre>
+  1: <span class="keyword">let</span> <span class="variable-name">choose</span> = <span class="keyword">function</span> (<span class="variable-name">p$40_2</span>){
+  2:   <span class="keyword">let</span> <span class="variable-name">e1$41_3</span> = p$40_2[0];
+  3:   <span class="keyword">let</span> <span class="variable-name">e2$42_5</span> = p$40_2[1];
+  4:   <span class="keyword">let</span> <span class="variable-name">e1$43_7</span> = e1$41_3;
+  5:   <span class="keyword">switch</span> (e1$43_7[0]) {
+  6:     <span class="keyword">case</span> <span class="string">"Nothing"</span>:
+  7:       <span class="keyword">let</span> <span class="variable-name">p$44_9</span> = e1$43_7[1];
+  8:       <span class="keyword">return</span> e2$42_5;
+  9:     
+ 10:     <span class="keyword">case</span> <span class="string">"Digit"</span>:
+ 11:       <span class="keyword">let</span> <span class="variable-name">n$45_10</span> = e1$43_7[1];
+ 12:       <span class="keyword">return</span> e1$43_7;
+ 13:     
+ 14:     <span class="keyword">case</span> <span class="string">"Clear"</span>:
+ 15:       <span class="keyword">let</span> <span class="variable-name">p$46_11</span> = e1$43_7[1];
+ 16:       <span class="keyword">return</span> e1$43_7;
+ 17:     
+ 18:     <span class="keyword">case</span> <span class="string">"Push"</span>:
+ 19:       <span class="keyword">let</span> <span class="variable-name">p$47_12</span> = e1$43_7[1];
+ 20:       <span class="keyword">return</span> e1$43_7;
+ 21:     
+ 22:     <span class="keyword">case</span> <span class="string">"Pop"</span>:
+ 23:       <span class="keyword">let</span> <span class="variable-name">p$48_13</span> = e1$43_7[1];
+ 24:       <span class="keyword">return</span> e1$43_7;
+ 25:     
+ 26:     <span class="keyword">case</span> <span class="string">"BinOp"</span>:
+ 27:       <span class="keyword">let</span> <span class="variable-name">f$49_14</span> = e1$43_7[1];
+ 28:       <span class="keyword">return</span> e1$43_7;
+ 29:     
+ 30:     <span class="keyword">case</span> <span class="string">"UnOp"</span>:
+ 31:       <span class="keyword">let</span> <span class="variable-name">f$50_15</span> = e1$43_7[1];
+ 32:       <span class="keyword">return</span> e1$43_7;
+ 33:     }
+ 34: };
+ 35: <span class="keyword">let</span> <span class="variable-name">step</span> = <span class="keyword">function</span> (<span class="variable-name">e$51_2</span>){
+ 36:   <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">stack$52_3</span>){
+ 37:     <span class="keyword">let</span> <span class="variable-name">pair$57_4</span> = [e$51_2, stack$52_3];
+ 38:     <span class="keyword">let</span> <span class="variable-name">u$58_7</span> = pair$57_4;
+ 39:     <span class="keyword">let</span> <span class="variable-name">event$59_8</span> = u$58_7[0];
+ 40:     <span class="keyword">let</span> <span class="variable-name">list$61_10</span> = u$58_7[1];
+ 41:     <span class="keyword">switch</span> (event$59_8[0]) {
+ 42:       <span class="keyword">case</span> <span class="string">"Nothing"</span>:
+ 43:         <span class="keyword">let</span> <span class="variable-name">p$60_13</span> = event$59_8[1];
+ 44:         <span class="keyword">return</span> stack$52_3;
+ 45:       
+ 46:       <span class="keyword">case</span> <span class="string">"Digit"</span>:
+ 47:         <span class="keyword">let</span> <span class="variable-name">n$62_14</span> = event$59_8[1];
+ 48:         <span class="keyword">switch</span> (list$61_10[0]) {
+ 49:           <span class="keyword">case</span> <span class="string">"Nil"</span>:
+ 50:             <span class="keyword">let</span> <span class="variable-name">p$64_16</span> = list$61_10[1];
+ 51:             <span class="keyword">return</span> [<span class="string">"Cons"</span>, [n$62_14, [<span class="string">"Nil"</span>, []]]];
+ 52:           
+ 53:           <span class="keyword">case</span> <span class="string">"Cons"</span>:
+ 54:             <span class="keyword">let</span> <span class="variable-name">p$65_21</span> = list$61_10[1];
+ 55:             <span class="keyword">let</span> <span class="variable-name">m$66_22</span> = p$65_21[0];
+ 56:             <span class="keyword">let</span> <span class="variable-name">rest$67_24</span> = p$65_21[1];
+ 57:             <span class="keyword">return</span> [<span class="string">"Cons"</span>, [n$62_14 + 10. * m$66_22, rest$67_24]];
+ 58:           }
+ 59:       
+ 60:       <span class="keyword">case</span> <span class="string">"Clear"</span>:
+ 61:         <span class="keyword">let</span> <span class="variable-name">p$68_33</span> = event$59_8[1];
+ 62:         <span class="keyword">switch</span> (list$61_10[0]) {
+ 63:           <span class="keyword">case</span> <span class="string">"Nil"</span>:
+ 64:             <span class="keyword">let</span> <span class="variable-name">p$70_35</span> = list$61_10[1];
+ 65:             <span class="keyword">return</span> stack$52_3;
+ 66:           
+ 67:           <span class="keyword">case</span> <span class="string">"Cons"</span>:
+ 68:             <span class="keyword">let</span> <span class="variable-name">p$71_36</span> = list$61_10[1];
+ 69:             <span class="keyword">let</span> <span class="variable-name">n$72_37</span> = p$71_36[0];
+ 70:             <span class="keyword">let</span> <span class="variable-name">rest$73_39</span> = p$71_36[1];
+ 71:             <span class="keyword">return</span> [<span class="string">"Cons"</span>, [0., rest$73_39]];
+ 72:           }
+ 73:       
+ 74:       <span class="keyword">case</span> <span class="string">"Push"</span>:
+ 75:         <span class="keyword">let</span> <span class="variable-name">p$74_44</span> = event$59_8[1];
+ 76:         <span class="keyword">return</span> [<span class="string">"Cons"</span>, [0., list$61_10]];
+ 77:       
+ 78:       <span class="keyword">case</span> <span class="string">"Pop"</span>:
+ 79:         <span class="keyword">let</span> <span class="variable-name">p$76_48</span> = event$59_8[1];
+ 80:         <span class="keyword">switch</span> (list$61_10[0]) {
+ 81:           <span class="keyword">case</span> <span class="string">"Nil"</span>:
+ 82:             <span class="keyword">let</span> <span class="variable-name">p$78_50</span> = list$61_10[1];
+ 83:             <span class="keyword">return</span> stack$52_3;
+ 84:           
+ 85:           <span class="keyword">case</span> <span class="string">"Cons"</span>:
+ 86:             <span class="keyword">let</span> <span class="variable-name">p$79_51</span> = list$61_10[1];
+ 87:             <span class="keyword">let</span> <span class="variable-name">n$80_52</span> = p$79_51[0];
+ 88:             <span class="keyword">let</span> <span class="variable-name">rest$81_54</span> = p$79_51[1];
+ 89:             <span class="keyword">return</span> rest$81_54;
+ 90:           }
+ 91:       
+ 92:       <span class="keyword">case</span> <span class="string">"BinOp"</span>:
+ 93:         <span class="keyword">let</span> <span class="variable-name">f$82_56</span> = event$59_8[1];
+ 94:         <span class="keyword">switch</span> (list$61_10[0]) {
+ 95:           <span class="keyword">case</span> <span class="string">"Nil"</span>:
+ 96:             <span class="keyword">let</span> <span class="variable-name">p$84_58</span> = list$61_10[1];
+ 97:             <span class="keyword">return</span> stack$52_3;
+ 98:           
+ 99:           <span class="keyword">case</span> <span class="string">"Cons"</span>:
+100:             <span class="keyword">let</span> <span class="variable-name">p$85_59</span> = list$61_10[1];
+101:             <span class="keyword">let</span> <span class="variable-name">n$86_60</span> = p$85_59[0];
+102:             <span class="keyword">let</span> <span class="variable-name">list$87_62</span> = p$85_59[1];
+103:             <span class="keyword">switch</span> (list$87_62[0]) {
+104:               <span class="keyword">case</span> <span class="string">"Nil"</span>:
+105:                 <span class="keyword">let</span> <span class="variable-name">p$88_65</span> = list$87_62[1];
+106:                 <span class="keyword">return</span> stack$52_3;
+107:               
+108:               <span class="keyword">case</span> <span class="string">"Cons"</span>:
+109:                 <span class="keyword">let</span> <span class="variable-name">p$89_66</span> = list$87_62[1];
+110:                 <span class="keyword">let</span> <span class="variable-name">m$90_67</span> = p$89_66[0];
+111:                 <span class="keyword">let</span> <span class="variable-name">rest$91_69</span> = p$89_66[1];
+112:                 <span class="keyword">return</span> [<span class="string">"Cons"</span>, [f$82_56(n$86_60)(m$90_67), rest$91_69]];
+113:               }
+114:           }
+115:       
+116:       <span class="keyword">case</span> <span class="string">"UnOp"</span>:
+117:         <span class="keyword">let</span> <span class="variable-name">f$92_78</span> = event$59_8[1];
+118:         <span class="keyword">switch</span> (list$61_10[0]) {
+119:           <span class="keyword">case</span> <span class="string">"Nil"</span>:
+120:             <span class="keyword">let</span> <span class="variable-name">p$94_80</span> = list$61_10[1];
+121:             <span class="keyword">return</span> stack$52_3;
+122:           
+123:           <span class="keyword">case</span> <span class="string">"Cons"</span>:
+124:             <span class="keyword">let</span> <span class="variable-name">p$95_81</span> = list$61_10[1];
+125:             <span class="keyword">let</span> <span class="variable-name">n$96_82</span> = p$95_81[0];
+126:             <span class="keyword">let</span> <span class="variable-name">rest$97_84</span> = p$95_81[1];
+127:             <span class="keyword">return</span> [<span class="string">"Cons"</span>, [f$92_78(n$96_82), rest$97_84]];
+128:           }
+129:       }
+130:   };
+131: };
+132: <span class="keyword">let</span> <span class="variable-name">states</span> = lazyfix(<span class="keyword">function</span> (<span class="variable-name">states$98_2</span>){
+133:                        <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">qs$100_3</span>){
+134:                          <span class="keyword">let</span> <span class="variable-name">u$101_4</span> = qs$100_3.head();
+135:                          <span class="keyword">let</span> <span class="variable-name">us$102_6</span> = qs$100_3.tail();
+136:                          <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">state$103_8</span>){
+137:                            <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">events$104_9</span>){
+138:                              <span class="keyword">let</span> <span class="variable-name">e$105_10</span> = events$104_9.head();
+139:                              <span class="keyword">let</span> <span class="variable-name">es$106_12</span> = events$104_9.tail();
+140:                              <span class="keyword">let</span> <span class="variable-name">u$111_14</span> = step(e$105_10)(state$103_8);
+141:                              <span class="keyword">let</span> <span class="variable-name">state$112_19</span> = u$111_14;
+142:                              <span class="keyword">return</span> <span class="keyword">new</span> <span class="type">Cons</span>(state$112_19,
+143:                                              <span class="keyword">new</span> <span class="type">Lazy</span>(<span class="keyword">function</span> (){
+144:                                                         <span class="keyword">let</span> <span class="variable-name">us$102_22</span> = us$102_6.force();
+145:                                                         <span class="keyword">let</span> <span class="variable-name">states$98_24</span> = states$98_2.force();
+146:                                                         <span class="keyword">let</span> <span class="variable-name">es$106_26</span> = es$106_12.force();
+147:                                                         <span class="keyword">return</span> states$98_24(us$102_22)(state$112_19)(es$106_26);
+148:                                                       }));
+149:                            };
+150:                          };
+151:                        };
+152:                      });
+153: <span class="keyword">let</span> <span class="variable-name">ints</span> = lazyfix(<span class="keyword">function</span> (<span class="variable-name">ints$113_2</span>){
+154:                      <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">qs$115_3</span>){
+155:                        <span class="keyword">let</span> <span class="variable-name">u$116_4</span> = qs$115_3.head();
+156:                        <span class="keyword">let</span> <span class="variable-name">us$117_6</span> = qs$115_3.tail();
+157:                        <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">n$118_8</span>){
+158:                          <span class="keyword">return</span> <span class="keyword">new</span> <span class="type">Cons</span>(n$118_8,
+159:                                          <span class="keyword">new</span> <span class="type">Lazy</span>(<span class="keyword">function</span> (){
+160:                                                     <span class="keyword">let</span> <span class="variable-name">us$117_11</span> = us$117_6.force();
+161:                                                     <span class="keyword">let</span> <span class="variable-name">ints$113_13</span> = ints$113_2.force();
+162:                                                     <span class="keyword">return</span> ints$113_13(us$117_11)(n$118_8 + 1.);
+163:                                                   }));
+164:                        };
+165:                      };
+166:                    });
+167: <span class="keyword">let</span> <span class="variable-name">stackToString</span> = <span class="keyword">function</span> stackToString$119_2(<span class="variable-name">ns$120_3</span>){
+168:   <span class="keyword">while</span> (<span class="constant">true</span>) {
+169:     <span class="keyword">let</span> <span class="variable-name">ns$120_4</span> = ns$120_3;
+170:     <span class="keyword">let</span> <span class="variable-name">list$121_5</span> = ns$120_4;
+171:     <span class="keyword">switch</span> (list$121_5[0]) {
+172:       <span class="keyword">case</span> <span class="string">"Nil"</span>:
+173:         <span class="keyword">let</span> <span class="variable-name">p$122_7</span> = list$121_5[1];
+174:         <span class="keyword">return</span> <span class="string">"--"</span>;
+175:       
+176:       <span class="keyword">case</span> <span class="string">"Cons"</span>:
+177:         <span class="keyword">let</span> <span class="variable-name">p$123_8</span> = list$121_5[1];
+178:         <span class="keyword">let</span> <span class="variable-name">n$124_9</span> = p$123_8[0];
+179:         <span class="keyword">let</span> <span class="variable-name">xs$125_11</span> = p$123_8[1];
+180:         <span class="keyword">switch</span> (xs$125_11[0]) {
+181:           <span class="keyword">case</span> <span class="string">"Nil"</span>:
+182:             <span class="keyword">let</span> <span class="variable-name">p$126_14</span> = xs$125_11[1];
+183:             <span class="keyword">return</span> toString(n$124_9);
+184:           
+185:           <span class="keyword">case</span> <span class="string">"Cons"</span>:
+186:             <span class="keyword">let</span> <span class="variable-name">p$127_17</span> = xs$125_11[1];
+187:             <span class="keyword">let</span> <span class="variable-name">m$128_18</span> = n$124_9;
+188:             <span class="keyword">return</span> cat([toString(m$128_18), cat([<span class="string">"  "</span>, stackToString$119_2(xs$125_11)])]);
+189:           }
+190:       }
+191:   }
+192: };
+193: <span class="keyword">let</span> <span class="variable-name">map</span> = lazyfix(<span class="keyword">function</span> (<span class="variable-name">map$139_2</span>){
+194:                     <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">st$149_3</span>){
+195:                       <span class="keyword">let</span> <span class="variable-name">f$150_4</span> = st$149_3;
+196:                       <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">qs$151_5</span>){
+197:                         <span class="keyword">let</span> <span class="variable-name">u$152_6</span> = qs$151_5.head();
+198:                         <span class="keyword">let</span> <span class="variable-name">us$153_8</span> = qs$151_5.tail();
+199:                         <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">us$154_10</span>){
+200:                           <span class="keyword">let</span> <span class="variable-name">x$155_11</span> = us$154_10.head();
+201:                           <span class="keyword">let</span> <span class="variable-name">xs$156_13</span> = us$154_10.tail();
+202:                           <span class="keyword">return</span> <span class="keyword">new</span> <span class="type">Cons</span>(f$150_4(x$155_11),
+203:                                           <span class="keyword">new</span> <span class="type">Lazy</span>(<span class="keyword">function</span> (){
+204:                                                      <span class="keyword">let</span> <span class="variable-name">xs$156_19</span> = xs$156_13.force();
+205:                                                      <span class="keyword">let</span> <span class="variable-name">us$153_21</span> = us$153_8.force();
+206:                                                      <span class="keyword">let</span> <span class="variable-name">map$139_23</span> = map$139_2.force();
+207:                                                      <span class="keyword">return</span> map$139_23(f$150_4)(us$153_21)(xs$156_19);
+208:                                                    }));
+209:                         };
+210:                       };
+211:                     };
+212:                   });
+213: <span class="keyword">let</span> <span class="variable-name">zip</span> = lazyfix(<span class="keyword">function</span> (<span class="variable-name">zip$179_2</span>){
+214:                     <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">qs$189_3</span>){
+215:                       <span class="keyword">let</span> <span class="variable-name">u$190_4</span> = qs$189_3.head();
+216:                       <span class="keyword">let</span> <span class="variable-name">us$191_6</span> = qs$189_3.tail();
+217:                       <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">us$192_8</span>){
+218:                         <span class="keyword">let</span> <span class="variable-name">a$193_9</span> = us$192_8.head();
+219:                         <span class="keyword">let</span> <span class="variable-name">as$194_11</span> = us$192_8.tail();
+220:                         <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">us$195_13</span>){
+221:                           <span class="keyword">let</span> <span class="variable-name">b$196_14</span> = us$195_13.head();
+222:                           <span class="keyword">let</span> <span class="variable-name">bs$197_16</span> = us$195_13.tail();
+223:                           <span class="keyword">return</span> <span class="keyword">new</span> <span class="type">Cons</span>([a$193_9, b$196_14],
+224:                                           <span class="keyword">new</span> <span class="type">Lazy</span>(<span class="keyword">function</span> (){
+225:                                                      <span class="keyword">let</span> <span class="variable-name">zip$179_22</span> = zip$179_2.force();
+226:                                                      <span class="keyword">let</span> <span class="variable-name">us$191_24</span> = us$191_6.force();
+227:                                                      <span class="keyword">let</span> <span class="variable-name">bs$197_26</span> = bs$197_16.force();
+228:                                                      <span class="keyword">let</span> <span class="variable-name">as$194_28</span> = as$194_11.force();
+229:                                                      <span class="keyword">return</span> zip$179_22(us$191_24)(as$194_28)(bs$197_26);
+230:                                                    }));
+231:                         };
+232:                       };
+233:                     };
+234:                   });
+235: <span class="keyword">let</span> <span class="variable-name">unfold</span> = lazyfix(<span class="keyword">function</span> (<span class="variable-name">unfold$219_2</span>){
+236:                        <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">st$229_3</span>){
+237:                          <span class="keyword">let</span> <span class="variable-name">f$230_4</span> = st$229_3;
+238:                          <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">qs$231_5</span>){
+239:                            <span class="keyword">let</span> <span class="variable-name">u$232_6</span> = qs$231_5.head();
+240:                            <span class="keyword">let</span> <span class="variable-name">us$233_8</span> = qs$231_5.tail();
+241:                            <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">seed$234_10</span>){
+242:                              <span class="keyword">let</span> <span class="variable-name">p$235_11</span> = f$230_4(u$232_6)(seed$234_10);
+243:                              <span class="keyword">let</span> <span class="variable-name">b$236_16</span> = p$235_11[0];
+244:                              <span class="keyword">let</span> <span class="variable-name">d$237_18</span> = p$235_11[1];
+245:                              <span class="keyword">let</span> <span class="variable-name">seed$238_20</span> = d$237_18;
+246:                              <span class="keyword">return</span> <span class="keyword">new</span> <span class="type">Cons</span>(b$236_16,
+247:                                              <span class="keyword">new</span> <span class="type">Lazy</span>(<span class="keyword">function</span> (){
+248:                                                         <span class="keyword">let</span> <span class="variable-name">us$233_23</span> = us$233_8.force();
+249:                                                         <span class="keyword">let</span> <span class="variable-name">unfold$219_25</span> = unfold$219_2.force();
+250:                                                         <span class="keyword">let</span> <span class="variable-name">seed$238_27</span> = seed$238_20.force();
+251:                                                         <span class="keyword">return</span> unfold$219_25(f$230_4)(us$233_23)(seed$238_27);
+252:                                                       }));
+253:                            };
+254:                          };
+255:                        };
+256:                      });
+257: <span class="keyword">let</span> <span class="variable-name">mux</span> = <span class="keyword">function</span> (<span class="variable-name">us$251_2</span>){
+258:   <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">es1$252_3</span>){
+259:     <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">es2$253_4</span>){
+260:       <span class="keyword">return</span> map(choose)(us$251_2)(zip(us$251_2)(es1$252_3)(es2$253_4));
+261:     };
+262:   };
+263: };
+264: <span class="keyword">let</span> <span class="variable-name">button</span> = <span class="keyword">function</span> (<span class="variable-name">us$289_2</span>){
+265:   <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">label$293_3</span>){
+266:     <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">e$297_4</span>){
+267:       <span class="keyword">return</span> <span class="keyword">function</span> (){
+268:         <span class="keyword">let</span> <span class="variable-name">w$309_5</span> = mkButton();
+269:         <span class="keyword">let</span> <span class="variable-name">w$323_7</span> = text(label$293_3)()(w$309_5);
+270:         <span class="keyword">let</span> <span class="variable-name">w$341_13</span> = width(<span class="string">"4em"</span>)()(w$323_7);
+271:         <span class="keyword">let</span> <span class="variable-name">t$363_19</span> = clicks(us$289_2)()(w$341_13);
+272:         <span class="keyword">let</span> <span class="variable-name">w$364_25</span> = t$363_19[0];
+273:         <span class="keyword">let</span> <span class="variable-name">i$365_27</span> = t$363_19[1];
+274:         <span class="keyword">let</span> <span class="variable-name">bs$366_29</span> = i$365_27;
+275:         <span class="keyword">return</span> [w$364_25,
+276:                 map(<span class="keyword">function</span> (<span class="variable-name">b$411_36</span>){
+277:                       <span class="keyword">if</span> (b$411_36) {
+278:                         <span class="keyword">return</span> e$297_4;
+279:                       } <span class="keyword">else</span> {
+280:                         <span class="keyword">return</span> [<span class="string">"Nothing"</span>, []];
+281:                       }
+282:                     })(us$289_2)(bs$366_29)];
+283:       };
+284:     };
+285:   };
+286: };
+287: <span class="keyword">let</span> <span class="variable-name">numeric</span> = <span class="keyword">function</span> (<span class="variable-name">us$413_2</span>){
+288:   <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">n$417_3</span>){
+289:     <span class="keyword">return</span> button(us$413_2)(toString(n$417_3))([<span class="string">"Digit"</span>, n$417_3]);
+290:   };
+291: };
+292: <span class="keyword">let</span> <span class="variable-name">panel</span> = <span class="keyword">function</span> (<span class="variable-name">us$454_2</span>){
+293:   <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">mkBox$473_3</span>){
+294:     <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">p$489_4</span>){
+295:       <span class="keyword">let</span> <span class="variable-name">b1$502_5</span> = p$489_4[0];
+296:       <span class="keyword">let</span> <span class="variable-name">b2$503_7</span> = p$489_4[1];
+297:       <span class="keyword">let</span> <span class="variable-name">b3$504_9</span> = p$489_4[2];
+298:       <span class="keyword">let</span> <span class="variable-name">b4$505_11</span> = p$489_4[3];
+299:       <span class="keyword">return</span> <span class="keyword">function</span> (){
+300:         <span class="keyword">let</span> <span class="variable-name">box$517_13</span> = mkBox$473_3();
+301:         <span class="keyword">let</span> <span class="variable-name">t$524_15</span> = b1$502_5();
+302:         <span class="keyword">let</span> <span class="variable-name">w1$526_17</span> = t$524_15[0];
+303:         <span class="keyword">let</span> <span class="variable-name">i$527_19</span> = t$524_15[1];
+304:         <span class="keyword">let</span> <span class="variable-name">es1$528_21</span> = i$527_19;
+305:         <span class="keyword">let</span> <span class="variable-name">t$535_22</span> = b2$503_7();
+306:         <span class="keyword">let</span> <span class="variable-name">w2$537_24</span> = t$535_22[0];
+307:         <span class="keyword">let</span> <span class="variable-name">i$538_26</span> = t$535_22[1];
+308:         <span class="keyword">let</span> <span class="variable-name">es2$539_28</span> = i$538_26;
+309:         <span class="keyword">let</span> <span class="variable-name">t$546_29</span> = b3$504_9();
+310:         <span class="keyword">let</span> <span class="variable-name">w3$548_31</span> = t$546_29[0];
+311:         <span class="keyword">let</span> <span class="variable-name">i$549_33</span> = t$546_29[1];
+312:         <span class="keyword">let</span> <span class="variable-name">es3$550_35</span> = i$549_33;
+313:         <span class="keyword">let</span> <span class="variable-name">t$557_36</span> = b4$505_11();
+314:         <span class="keyword">let</span> <span class="variable-name">w4$559_38</span> = t$557_36[0];
+315:         <span class="keyword">let</span> <span class="variable-name">i$560_40</span> = t$557_36[1];
+316:         <span class="keyword">let</span> <span class="variable-name">es4$561_42</span> = i$560_40;
+317:         <span class="keyword">let</span> <span class="variable-name">box$582_43</span> = attach()([box$517_13, w1$526_17]);
+318:         <span class="keyword">let</span> <span class="variable-name">box$615_49</span> = attach()([box$582_43, w2$537_24]);
+319:         <span class="keyword">let</span> <span class="variable-name">box$660_55</span> = attach()([box$615_49, w3$548_31]);
+320:         <span class="keyword">let</span> <span class="variable-name">box$717_61</span> = attach()([box$660_55, w4$559_38]);
+321:         <span class="keyword">return</span> [box$717_61, mux(us$454_2)(es1$528_21)(mux(us$454_2)(es2$539_28)(mux(us$454_2)(es3$550_35)(es4$561_42)))];
+322:       };
+323:     };
+324:   };
+325: };
+326: <span class="keyword">let</span> <span class="variable-name">inputPanel</span> = <span class="keyword">function</span> (<span class="variable-name">us$754_2</span>){
+327:   <span class="keyword">return</span> panel(us$754_2)(vbox)([panel(us$754_2)(hbox)([numeric(us$754_2)(7.),
+328:                                                        numeric(us$754_2)(8.),
+329:                                                        numeric(us$754_2)(9.),
+330:                                                        button(us$754_2)(<span class="string">"x"</span>)([<span class="string">"BinOp"</span>,
+331:                                                                               <span class="keyword">function</span> (<span class="variable-name">a$988_39</span>){
+332:                                                                                 <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">b$989_40</span>){
+333:                                                                                   <span class="keyword">return</span> a$988_39 * b$989_40;
+334:                                                                                 };
+335:                                                                               }])]),
+336:                                 panel(us$754_2)(hbox)([numeric(us$754_2)(4.),
+337:                                                        numeric(us$754_2)(5.),
+338:                                                        numeric(us$754_2)(6.),
+339:                                                        button(us$754_2)(<span class="string">"+"</span>)([<span class="string">"BinOp"</span>,
+340:                                                                               <span class="keyword">function</span> (<span class="variable-name">a$1192_73</span>){
+341:                                                                                 <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">b$1193_74</span>){
+342:                                                                                   <span class="keyword">return</span> a$1192_73 + b$1193_74;
+343:                                                                                 };
+344:                                                                               }])]),
+345:                                 panel(us$754_2)(hbox)([numeric(us$754_2)(1.), numeric(us$754_2)(2.), numeric(us$754_2)(3.), button(us$754_2)(<span class="string">"Pop"</span>)([<span class="string">"Pop"</span>, []])]),
+346:                                 panel(us$754_2)(hbox)([button(us$754_2)(<span class="string">"+/-"</span>)([<span class="string">"UnOp"</span>,
+347:                                                                                 <span class="keyword">function</span> (<span class="variable-name">n$1517_122</span>){
+348:                                                                                   <span class="keyword">return</span> 0. - n$1517_122;
+349:                                                                                 }]),
+350:                                                        numeric(us$754_2)(0.),
+351:                                                        button(us$754_2)(<span class="string">"C"</span>)([<span class="string">"Clear"</span>, []]),
+352:                                                        button(us$754_2)(<span class="string">"Push"</span>)([<span class="string">"Push"</span>, []])])]);
+353: };
+354: <span class="keyword">let</span> <span class="variable-name">dynlabel</span> = <span class="keyword">function</span> (<span class="variable-name">us$1666_2</span>){
+355:   <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">ss$1670_3</span>){
+356:     <span class="keyword">return</span> <span class="keyword">function</span> (){
+357:       <span class="keyword">let</span> <span class="variable-name">displayText$1743_4</span> = lazyfix(<span class="keyword">function</span> (<span class="variable-name">displayText$1683_5</span>){
+358:                                          <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">i$1690_6</span>){
+359:                                            <span class="keyword">let</span> <span class="variable-name">qs$1691_7</span> = i$1690_6;
+360:                                            <span class="keyword">let</span> <span class="variable-name">u$1692_8</span> = qs$1691_7.head();
+361:                                            <span class="keyword">let</span> <span class="variable-name">us$1693_10</span> = qs$1691_7.tail();
+362:                                            <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">i$1694_12</span>){
+363:                                              <span class="keyword">let</span> <span class="variable-name">ss$1695_13</span> = i$1694_12;
+364:                                              <span class="keyword">let</span> <span class="variable-name">s$1696_14</span> = ss$1695_13.head();
+365:                                              <span class="keyword">let</span> <span class="variable-name">ss$1697_16</span> = ss$1695_13.tail();
+366:                                              <span class="keyword">return</span> <span class="keyword">function</span> (<span class="variable-name">w$1698_18</span>){
+367:                                                <span class="keyword">let</span> <span class="variable-name">w$1709_19</span> = text(s$1696_14)()(w$1698_18);
+368:                                                <span class="keyword">let</span> <span class="variable-name">t$1719_25</span> = split()(w$1709_19);
+369:                                                <span class="keyword">let</span> <span class="variable-name">w0$1720_29</span> = t$1719_25[0];
+370:                                                <span class="keyword">let</span> <span class="variable-name">d$1721_31</span> = t$1719_25[1];
+371:                                                <span class="keyword">let</span> <span class="variable-name">w1$1722_33</span> = d$1721_31;
+372:                                                <span class="keyword">return</span> merge()([w0$1720_29,
+373:                                                                <span class="keyword">new</span> <span class="type">Lazy</span>(<span class="keyword">function</span> (){
+374:                                                                           <span class="keyword">let</span> <span class="variable-name">w1$1722_39</span> = w1$1722_33.force();
+375:                                                                           <span class="keyword">let</span> <span class="variable-name">us$1693_41</span> = us$1693_10.force();
+376:                                                                           <span class="keyword">let</span> <span class="variable-name">ss$1697_43</span> = ss$1697_16.force();
+377:                                                                           <span class="keyword">let</span> <span class="variable-name">displayText$1683_45</span> = displayText$1683_5.force();
+378:                                                                           <span class="keyword">return</span> displayText$1683_45(us$1693_41)(ss$1697_43)(w1$1722_39);
+379:                                                                         })]);
+380:                                              };
+381:                                            };
+382:                                          };
+383:                                        });
+384:       <span class="keyword">let</span> <span class="variable-name">w$1754_53</span> = mkText(<span class="string">""</span>)();
+385:       <span class="keyword">return</span> displayText$1743_4(us$1666_2)(ss$1670_3)(w$1754_53);
+386:     };
+387:   };
+388: };
+389: <span class="keyword">let</span> <span class="variable-name">main</span> = <span class="keyword">function</span> (<span class="variable-name">us$1770_2</span>){
+390:   <span class="keyword">return</span> <span class="keyword">function</span> (){
+391:     <span class="keyword">let</span> <span class="variable-name">t$1782_3</span> = inputPanel(us$1770_2)();
+392:     <span class="keyword">let</span> <span class="variable-name">wpanel$1784_7</span> = t$1782_3[0];
+393:     <span class="keyword">let</span> <span class="variable-name">i$1785_9</span> = t$1782_3[1];
+394:     <span class="keyword">let</span> <span class="variable-name">events$1786_11</span> = i$1785_9;
+395:     <span class="keyword">let</span> <span class="variable-name">events$1791_14</span> = states(us$1770_2)([<span class="string">"Nil"</span>, []])(events$1786_11);
+396:     <span class="keyword">let</span> <span class="variable-name">labels$1808_22</span> = map(stackToString)(us$1770_2)(events$1791_14);
+397:     <span class="keyword">let</span> <span class="variable-name">wdisplay$1850_12</span> = dynlabel(us$1770_2)(labels$1808_22)();
+398:     <span class="keyword">let</span> <span class="variable-name">wdisplay$1864_33</span> = backgroundColor(<span class="string">"rgb(60,60,60)"</span>)()(wdisplay$1850_12);
+399:     <span class="keyword">let</span> <span class="variable-name">wdisplay$1882_39</span> = fontFamily(<span class="string">"monospace"</span>)()(wdisplay$1864_33);
+400:     <span class="keyword">let</span> <span class="variable-name">box$1894_45</span> = vbox();
+401:     <span class="keyword">let</span> <span class="variable-name">box$1927_47</span> = attach()([box$1894_45, wdisplay$1882_39]);
+402:     <span class="keyword">let</span> <span class="variable-name">box$1972_53</span> = attach()([box$1927_47, wpanel$1784_7]);
+403:     <span class="keyword">return</span> box$1972_53;
+404:   };
+405: };
+406: <span class="keyword">let</span> <span class="variable-name">$main</span> = <span class="keyword">function</span> (<span class="variable-name">$alloc</span>){
+407:   <span class="keyword">return</span> main($alloc);
+408: };
+</pre>
+  </body>
+</html>
