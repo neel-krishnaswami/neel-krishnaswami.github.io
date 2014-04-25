@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!-- Created by htmlize-1.36 in css mode. -->
+<html>
+  <head>
+    <title>stdlib.sig</title>
+    <style type="text/css">
+    <!--
+      body {
+        color: #ffffff;
+        background-color: #2f4f4f;
+      }
+      .keyword {
+        /* font-lock-keyword-face */
+        color: #00ffff;
+      }
+      .tuareg-font-lock-governing {
+        /* tuareg-font-lock-governing-face */
+        color: #ffa500;
+        font-weight: bold;
+      }
+      .tuareg-font-lock-operator {
+        /* tuareg-font-lock-operator-face */
+        color: #f0e68c;
+      }
+      .type {
+        /* font-lock-type-face */
+        color: #98fb98;
+      }
+      .variable-name {
+        /* font-lock-variable-name-face */
+        color: #eedd82;
+      }
+
+      a {
+        color: inherit;
+        background-color: inherit;
+        font: inherit;
+        text-decoration: inherit;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    -->
+    </style>
+  </head>
+  <body>
+    <pre>
+ 1<span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-operator">//</span> types
+ 2<span class="tuareg-font-lock-operator">:</span> 
+ <span class="type">3</span><span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-governing">type</span> <span class="type">option a </span><span class="tuareg-font-lock-operator">=</span> None <span class="tuareg-font-lock-operator">|</span> Some <span class="keyword">of</span> a
+ 4<span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-governing">type</span><span class="type"> list a </span><span class="tuareg-font-lock-operator">=</span> Nil <span class="tuareg-font-lock-operator">|</span> Cons <span class="keyword">of</span> a <span class="tuareg-font-lock-operator">&amp;</span> list a
+ 5<span class="tuareg-font-lock-operator">:</span> 
+ <span class="type">6</span><span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-operator">//</span> utility functions
+ 7<span class="tuareg-font-lock-operator">:</span> 
+ <span class="type">8</span><span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-governing">val</span> <span class="variable-name">toString </span><span class="tuareg-font-lock-operator">:</span> <span class="type">num </span><span class="tuareg-font-lock-operator">-&gt;</span><span class="type"> string</span>
+ 9<span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-governing">val</span><span class="type"> </span><span class="variable-name">cat    </span><span class="tuareg-font-lock-operator">:</span> string <span class="tuareg-font-lock-operator">&amp;</span> string <span class="tuareg-font-lock-operator">-&gt;</span> string
+10<span class="tuareg-font-lock-operator">:</span> 
+<span class="type">11</span><span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-operator">//</span> Widget construction 
+12<span class="tuareg-font-lock-operator">:</span> 
+<span class="type">13</span><span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-governing">val</span> <span class="variable-name">mkText   </span><span class="tuareg-font-lock-operator">:</span> <span class="type">string </span><span class="tuareg-font-lock-operator">-&gt;</span><span class="type"> G</span><span class="tuareg-font-lock-operator">(</span><span class="type">exists a. dom a</span><span class="tuareg-font-lock-operator">)</span>
+14<span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-governing">val</span><span class="type"> </span><span class="variable-name">mkButton </span><span class="tuareg-font-lock-operator">:</span> G<span class="tuareg-font-lock-operator">(</span>exists a. dom a<span class="tuareg-font-lock-operator">)</span>
+15<span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-governing">val</span><span class="type"> </span><span class="variable-name">vbox     </span><span class="tuareg-font-lock-operator">:</span> G<span class="tuareg-font-lock-operator">(</span>exists a. dom a<span class="tuareg-font-lock-operator">)</span>
+16<span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-governing">val</span><span class="type"> </span><span class="variable-name">hbox     </span><span class="tuareg-font-lock-operator">:</span> G<span class="tuareg-font-lock-operator">(</span>exists a. dom a<span class="tuareg-font-lock-operator">)</span>
+17<span class="tuareg-font-lock-operator">:</span> 
+<span class="type">18</span><span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-governing">val</span> <span class="variable-name">attach </span><span class="tuareg-font-lock-operator">:</span> <span class="type">G</span><span class="tuareg-font-lock-operator">(</span><span class="type">forall a b. dom a </span><span class="tuareg-font-lock-operator">*</span><span class="type"> dom b </span><span class="tuareg-font-lock-operator">-</span><span class="type">o dom a</span><span class="tuareg-font-lock-operator">)</span>
+19<span class="tuareg-font-lock-operator">:</span> 
+<span class="type">20</span><span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-operator">//</span> Widget modification 
+21<span class="tuareg-font-lock-operator">:</span> 
+<span class="type">22</span><span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-governing">val</span> <span class="variable-name">backgroundColor </span><span class="tuareg-font-lock-operator">:</span> <span class="type">string </span><span class="tuareg-font-lock-operator">-&gt;</span><span class="type"> G</span><span class="tuareg-font-lock-operator">(</span><span class="type">forall a. dom a </span><span class="tuareg-font-lock-operator">-</span><span class="type">o dom a</span><span class="tuareg-font-lock-operator">)</span>
+23<span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-governing">val</span><span class="type"> </span><span class="variable-name">color           </span><span class="tuareg-font-lock-operator">:</span> string <span class="tuareg-font-lock-operator">-&gt;</span> G<span class="tuareg-font-lock-operator">(</span>forall a. dom a <span class="tuareg-font-lock-operator">-</span>o dom a<span class="tuareg-font-lock-operator">)</span>
+24<span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-governing">val</span><span class="type"> </span><span class="variable-name">font            </span><span class="tuareg-font-lock-operator">:</span> string <span class="tuareg-font-lock-operator">-&gt;</span> G<span class="tuareg-font-lock-operator">(</span>forall a. dom a <span class="tuareg-font-lock-operator">-</span>o dom a<span class="tuareg-font-lock-operator">)</span>
+25<span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-governing">val</span><span class="type"> </span><span class="variable-name">fontFamily      </span><span class="tuareg-font-lock-operator">:</span> string <span class="tuareg-font-lock-operator">-&gt;</span> G<span class="tuareg-font-lock-operator">(</span>forall a. dom a <span class="tuareg-font-lock-operator">-</span>o dom a<span class="tuareg-font-lock-operator">)</span>
+26<span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-governing">val</span><span class="type"> </span><span class="variable-name">width           </span><span class="tuareg-font-lock-operator">:</span> string <span class="tuareg-font-lock-operator">-&gt;</span> G<span class="tuareg-font-lock-operator">(</span>forall a. dom a <span class="tuareg-font-lock-operator">-</span>o dom a<span class="tuareg-font-lock-operator">)</span>
+27<span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-governing">val</span><span class="type"> </span><span class="variable-name">text            </span><span class="tuareg-font-lock-operator">:</span> string <span class="tuareg-font-lock-operator">-&gt;</span> G<span class="tuareg-font-lock-operator">(</span>forall a. dom a <span class="tuareg-font-lock-operator">-</span>o dom a<span class="tuareg-font-lock-operator">)</span>
+28<span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-governing">val</span><span class="type"> </span><span class="variable-name">width           </span><span class="tuareg-font-lock-operator">:</span> string <span class="tuareg-font-lock-operator">-&gt;</span> G<span class="tuareg-font-lock-operator">(</span>forall a. dom a <span class="tuareg-font-lock-operator">-</span>o dom a<span class="tuareg-font-lock-operator">)</span>
+29<span class="tuareg-font-lock-operator">:</span> 
+<span class="type">30</span><span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-operator">//</span> Widget dynamics 
+31<span class="tuareg-font-lock-operator">:</span> 
+<span class="type">32</span><span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-governing">val</span> <span class="variable-name">split </span><span class="tuareg-font-lock-operator">:</span> <span class="type">G</span><span class="tuareg-font-lock-operator">(</span>forall a. dom a <span class="tuareg-font-lock-operator">-</span>o frame a <span class="tuareg-font-lock-operator">*</span> next<span class="tuareg-font-lock-operator">(</span>dom a<span class="tuareg-font-lock-operator">))</span>
+33<span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-governing">val</span><span class="type"> </span><span class="variable-name">merge </span><span class="tuareg-font-lock-operator">:</span> G<span class="tuareg-font-lock-operator">(</span>forall a. frame a <span class="tuareg-font-lock-operator">*</span> next<span class="tuareg-font-lock-operator">(</span>dom a<span class="tuareg-font-lock-operator">)</span> <span class="tuareg-font-lock-operator">-</span>o dom a<span class="tuareg-font-lock-operator">)</span>
+34<span class="tuareg-font-lock-operator">:</span> 
+<span class="type">35</span><span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-operator">//</span> Event processing
+36<span class="tuareg-font-lock-operator">:</span> 
+<span class="type">37</span><span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-governing">val</span> <span class="variable-name">mouseover    </span><span class="tuareg-font-lock-operator">:</span> <span class="type">stream alloc </span><span class="tuareg-font-lock-operator">-&gt;</span><span class="type"> G</span><span class="tuareg-font-lock-operator">(</span>forall a. dom a <span class="tuareg-font-lock-operator">-</span>o dom a <span class="tuareg-font-lock-operator">*</span> F <span class="tuareg-font-lock-operator">(</span>stream bool<span class="tuareg-font-lock-operator">))</span>
+38<span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-governing">val</span><span class="type"> </span><span class="variable-name">clicks       </span><span class="tuareg-font-lock-operator">:</span> stream alloc <span class="tuareg-font-lock-operator">-&gt;</span> G<span class="tuareg-font-lock-operator">(</span>forall a. dom a <span class="tuareg-font-lock-operator">-</span>o dom a <span class="tuareg-font-lock-operator">*</span> F <span class="tuareg-font-lock-operator">(</span>stream bool<span class="tuareg-font-lock-operator">))</span>
+39<span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-governing">val</span><span class="type"> </span><span class="variable-name">keypress     </span><span class="tuareg-font-lock-operator">:</span> stream alloc <span class="tuareg-font-lock-operator">-&gt;</span> G<span class="tuareg-font-lock-operator">(</span>forall a. dom a <span class="tuareg-font-lock-operator">-</span>o dom a <span class="tuareg-font-lock-operator">*</span> F <span class="tuareg-font-lock-operator">(</span>stream <span class="tuareg-font-lock-operator">(</span>option string<span class="tuareg-font-lock-operator">)))</span>
+40<span class="tuareg-font-lock-operator">:</span> 
+<span class="type">41</span><span class="tuareg-font-lock-operator">:</span> <span class="tuareg-font-lock-operator">//</span> <span class="tuareg-font-lock-governing">val</span> <span class="variable-name">doubleclicks </span><span class="tuareg-font-lock-operator">:</span> <span class="type">alloc </span><span class="tuareg-font-lock-operator">-&gt;</span><span class="type"> G</span><span class="tuareg-font-lock-operator">(</span>forall a. dom a <span class="tuareg-font-lock-operator">-</span>o dom a <span class="tuareg-font-lock-operator">*</span> F <span class="tuareg-font-lock-operator">(</span>stream bool<span class="tuareg-font-lock-operator">))</span>
+
+</pre>
+  </body>
+</html>
