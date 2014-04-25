@@ -1,0 +1,424 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!-- Created by htmlize-1.36 in css mode. -->
+<html>
+  <head>
+    <title>runtime.js</title>
+    <style type="text/css">
+    <!--
+      body {
+        color: #ffffff;
+        background-color: #2f4f4f;
+      }
+      .comment {
+        /* font-lock-comment-face */
+        color: #ff7f24;
+      }
+      .comment-delimiter {
+        /* font-lock-comment-delimiter-face */
+        color: #ff7f24;
+      }
+      .constant {
+        /* font-lock-constant-face */
+        color: #7fffd4;
+      }
+      .keyword {
+        /* font-lock-keyword-face */
+        color: #00ffff;
+      }
+      .string {
+        /* font-lock-string-face */
+        color: #ffa07a;
+      }
+      .type {
+        /* font-lock-type-face */
+        color: #98fb98;
+      }
+      .variable-name {
+        /* font-lock-variable-name-face */
+        color: #eedd82;
+      }
+
+      a {
+        color: inherit;
+        background-color: inherit;
+        font: inherit;
+        text-decoration: inherit;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    -->
+    </style>
+  </head>
+  <body>
+    <pre>
+  1: <span class="comment-delimiter">// </span><span class="comment">Thunks to implement lazy evaluation
+</span>  2: <span class="comment-delimiter">// </span><span class="comment">
+</span>  3: <span class="comment-delimiter">// </span><span class="comment">We memoize this, so the G modality can't use this 
+</span>  4: <span class="comment-delimiter">// </span><span class="comment">implementation of thunks -- it just uses nullary 
+</span>  5: <span class="comment-delimiter">// </span><span class="comment">functions since it needs call-by-name behavior for 
+</span>  6: <span class="comment-delimiter">// </span><span class="comment">correctness. 
+</span>  7: <span class="comment-delimiter">//</span><span class="comment">
+</span>  8: <span class="keyword">function</span> Lazy(<span class="variable-name">fn</span>) {
+  9:     <span class="constant">this</span>.code = fn;
+ 10:     <span class="constant">this</span>.value = <span class="constant">null</span>;
+ 11:     <span class="constant">this</span>.evaluated = <span class="constant">false</span>;
+ 12: }
+ 13: Lazy.<span class="constant">prototype</span>.force  = <span class="keyword">function</span> () {
+ 14:     <span class="keyword">if</span> (<span class="constant">this</span>.evaluated) {
+ 15:    <span class="keyword">return</span> <span class="constant">this</span>.value;
+ 16:     } <span class="keyword">else</span> {
+ 17:    <span class="keyword">let</span> <span class="variable-name">f</span> = <span class="constant">this</span>.code;
+ 18:    <span class="constant">this</span>.value = f(); <span class="comment-delimiter">// </span><span class="comment">avoids passing the thunk as 'this'
+</span> 19:    <span class="keyword">return</span> <span class="constant">this</span>.value;
+ 20:     }
+ 21: }
+ 22: 
+ 23: <span class="comment-delimiter">// </span><span class="comment">The Thunk operator
+</span> 24: <span class="comment-delimiter">//</span><span class="comment">
+</span> 25: <span class="comment-delimiter">// </span><span class="comment">This does nothing. 
+</span> 26: 
+ 27: <span class="keyword">function</span> Thunk(<span class="variable-name">thunk</span>) { 
+ 28:     <span class="keyword">return</span> thunk;
+ 29: }
+ 30: 
+ 31: <span class="comment-delimiter">////////////////</span><span class="comment">
+</span> 32: 
+ 33: <span class="comment-delimiter">//</span><span class="comment">
+</span> 34: <span class="comment-delimiter">// </span><span class="comment">interface Cons a = {
+</span> 35: <span class="comment-delimiter">//    </span><span class="comment">head : () -&gt; a;
+</span> 36: <span class="comment-delimiter">//    </span><span class="comment">tail : () -&gt; Lazy (Cons a)
+</span> 37: <span class="comment-delimiter">// </span><span class="comment">}
+</span> 38: 
+ 39: <span class="comment-delimiter">// </span><span class="comment">The naive implementation. 
+</span> 40: <span class="comment-delimiter">//</span><span class="comment">
+</span> 41: <span class="keyword">function</span> Cons(<span class="variable-name">h</span>, <span class="variable-name">t</span>) {
+ 42:     <span class="constant">this</span>.hd = h;
+ 43:     <span class="constant">this</span>.tl = t;
+ 44: }
+ 45: Cons.<span class="constant">prototype</span>.head = <span class="keyword">function</span> () {
+ 46:     <span class="keyword">return</span> <span class="constant">this</span>.hd;
+ 47: }
+ 48: Cons.<span class="constant">prototype</span>.tail = <span class="keyword">function</span> () {
+ 49:     <span class="keyword">return</span> <span class="constant">this</span>.tl;
+ 50: }
+ 51: 
+ 52: <span class="comment-delimiter">// </span><span class="comment">Turn async events into synchronous streams
+</span> 53: <span class="comment-delimiter">//</span><span class="comment">
+</span> 54: <span class="comment-delimiter">// </span><span class="comment">The idea behind is that we have an event which periodically 
+</span> 55: <span class="comment-delimiter">// </span><span class="comment">evaluates its event handlers at unknown times. We want to turn the
+</span> 56: <span class="comment-delimiter">// </span><span class="comment">event into a data stream, so we create a new piece of memory 
+</span> 57: <span class="comment-delimiter">// </span><span class="comment">this.buffer, and attach an event handler which updates this.buffer.
+</span> 58: <span class="comment-delimiter">//</span><span class="comment">
+</span> 59: <span class="comment-delimiter">// </span><span class="comment">When we force the tail of the stream, we copy the value of this.buffer
+</span> 60: <span class="comment-delimiter">// </span><span class="comment">into this.head, giving us the new value of the stream for this tick. 
+</span> 61: <span class="comment-delimiter">// </span><span class="comment">So if the event handler is called multiple times during a tick, the 
+</span> 62: <span class="comment-delimiter">// </span><span class="comment">last value wins.
+</span> 63: <span class="comment-delimiter">//</span><span class="comment">
+</span> 64: <span class="comment-delimiter">// </span><span class="comment">Furthermore, we only want to copy the buffer once per tick, but we can 
+</span> 65: <span class="comment-delimiter">// </span><span class="comment">create multiple aliases to the tail of the stream. So we also have a flag 
+</span> 66: <span class="comment-delimiter">// </span><span class="comment">variable, which tail checks before doing the move. This ensures that the 
+</span> 67: <span class="comment-delimiter">// </span><span class="comment">copy is dones at most once. 
+</span> 68: <span class="comment-delimiter">//</span><span class="comment">
+</span> 69: <span class="comment-delimiter">// </span><span class="comment">Furthermore, if the copy is never done, that's fine! This means no one
+</span> 70: <span class="comment-delimiter">// </span><span class="comment">will ever look at the stream in the future, so there's no need to update
+</span> 71: <span class="comment-delimiter">// </span><span class="comment">the event stream. 
+</span> 72: 
+ 73: <span class="keyword">function</span> EventStream(<span class="variable-name">noEvent</span>, <span class="variable-name">onEvent</span>) {
+ 74:     <span class="keyword">let</span> <span class="variable-name">stream</span> = <span class="constant">this</span>;
+ 75:     stream.noEvent = noEvent;
+ 76:     stream.hd = noEvent;
+ 77:     <span class="comment-delimiter">//</span><span class="comment">
+</span> 78:     stream.buffer = noEvent;
+ 79:     stream.tick = <span class="constant">false</span>;
+ 80:     <span class="comment-delimiter">//</span><span class="comment">
+</span> 81:     onEvent(<span class="keyword">function</span> (<span class="variable-name">v</span>) { stream.buffer = v; });
+ 82: }
+ 83: EventStream.<span class="constant">prototype</span>.head = <span class="keyword">function</span> () { 
+ 84:     <span class="keyword">return</span> <span class="constant">this</span>.hd;
+ 85: }
+ 86: EventStream.<span class="constant">prototype</span>.tail = <span class="keyword">function</span> () {
+ 87:     <span class="keyword">let</span> <span class="variable-name">stream</span> = <span class="constant">this</span>;
+ 88:     <span class="keyword">let</span> <span class="variable-name">old_tick</span> = <span class="constant">this</span>.tick;
+ 89:     <span class="keyword">function</span> thunk () {
+ 90:    <span class="keyword">if</span> (stream.tick === old_tick) {
+ 91:        stream.tick = !stream.tick;
+ 92:        stream.hd = stream.buffer;
+ 93:        stream.buffer = stream.noEvent;
+ 94:    }
+ 95:    <span class="keyword">return</span> stream;
+ 96:     }
+ 97:     <span class="keyword">return</span> (<span class="keyword">new</span> <span class="type">Lazy</span>(thunk));
+ 98: }
+ 99: 
+100: <span class="comment-delimiter">// </span><span class="comment">Take a nullary event like onClick and generate a stream of booleans
+</span>101: <span class="comment-delimiter">// </span><span class="comment">saying whether the event happened this tick. 
+</span>102: 
+103: <span class="keyword">function</span> booleanEventStream(<span class="variable-name">onEvent</span>) {
+104:     <span class="keyword">return</span> <span class="keyword">new</span> <span class="type">EventStream</span>(<span class="constant">false</span>,
+105:                       <span class="keyword">function</span> (<span class="variable-name">f</span>) {
+106:                           onEvent(<span class="keyword">function</span> () { f(<span class="constant">true</span>); });
+107:                       });
+108: }
+109: 
+110: <span class="comment-delimiter">// </span><span class="comment">Take a stream of keyboard events and generate a stream of option string
+</span>111: <span class="comment-delimiter">// </span><span class="comment">saying whether the event happened, and what the string was. 
+</span>112: 
+113: <span class="keyword">function</span> keyboardEventStream(<span class="variable-name">onEvent</span>) {
+114:     <span class="keyword">let</span> <span class="variable-name">none</span> = [<span class="string">"None"</span>, []];
+115:     <span class="keyword">let</span> <span class="variable-name">some</span> = <span class="keyword">function</span>(<span class="variable-name">v</span>) { <span class="keyword">return</span> [<span class="string">"Some"</span>, v]; };
+116:     <span class="keyword">return</span> <span class="keyword">new</span> <span class="type">EventStream</span>(none,
+117:                            <span class="keyword">function</span>(<span class="variable-name">f</span>) {
+118:                                onEvent(<span class="keyword">function</span>(<span class="variable-name">evt</span>) { f(some(String.fromCharCode(evt.charCode))); }); 
+119:                            });
+120: }
+121: 
+122: 
+123: <span class="comment-delimiter">////////////////</span><span class="comment">
+</span>124: 
+125: <span class="keyword">function</span> lazyfix(<span class="variable-name">f</span>) {
+126:     <span class="keyword">return</span> f(<span class="keyword">new</span> <span class="type">Lazy</span>(<span class="keyword">function</span> () { <span class="keyword">return</span> lazyfix(f); }));
+127: }
+128: 
+129: <span class="keyword">function</span> toString (<span class="variable-name">n</span>) {
+130:     <span class="keyword">return</span> n.toString();
+131: }
+132: 
+133: <span class="keyword">function</span> cat (<span class="variable-name">pair</span>) {
+134:     <span class="keyword">return</span> pair[0] + pair[1];
+135: }
+136: 
+137: <span class="comment-delimiter">//////////////// </span><span class="comment">Widgets ////////////////
+</span>138: <span class="comment-delimiter">//</span><span class="comment">
+</span>139: <span class="comment-delimiter">// </span><span class="comment">Widgets are basically DOM nodes, plus two extra properties.
+</span>140: <span class="comment-delimiter">// </span><span class="comment">First, we add a tickQueue property, which queues the actions to
+</span>141: <span class="comment-delimiter">// </span><span class="comment">perform on the node at the end of a timestep.
+</span>142: <span class="comment-delimiter">// </span><span class="comment">
+</span>143: <span class="comment-delimiter">// </span><span class="comment">Second, we have a maybeText property, which is either false (if the
+</span>144: <span class="comment-delimiter">// </span><span class="comment">DOM node does not have a text node as a direct subchild), or is a
+</span>145: <span class="comment-delimiter">// </span><span class="comment">text node (if the DOM node has that text node as a direct subchild).
+</span>146: <span class="comment-delimiter">//</span><span class="comment">
+</span>147: <span class="comment-delimiter">// </span><span class="comment">We use maybeText to give a simpler API for updating the 
+</span>148: 
+149: <span class="comment-delimiter">// </span><span class="comment">The step function executes all of the queued actions on each widget, 
+</span>150: <span class="comment-delimiter">// </span><span class="comment">when a tick happens. It does this bottom-up, updating all the children
+</span>151: <span class="comment-delimiter">// </span><span class="comment">of a DOM node before updating the node. 
+</span>152: 
+153: <span class="keyword">function</span> isWidget(<span class="variable-name">node</span>) {
+154:     <span class="keyword">return</span> node.hasOwnProperty(<span class="string">'tickQueue'</span>);
+155: }
+156: 
+157: <span class="keyword">function</span> $step(<span class="variable-name">widget</span>) {
+158:     <span class="keyword">let</span> <span class="variable-name">children</span> = widget.childNodes;    
+159:     <span class="keyword">let</span> <span class="variable-name">i</span> = 0;
+160:     <span class="keyword">let</span> <span class="variable-name">len</span> = children.length;
+161:     <span class="keyword">while</span> (i &lt; len) {
+162:    <span class="keyword">if</span> (isWidget(children.item(i))) {
+163:        $step(children.item(i));
+164:    }
+165:    i = i + 1;
+166:     }
+167:     <span class="comment-delimiter">//</span><span class="comment">
+</span>168:     <span class="keyword">let</span> <span class="variable-name">todo</span> = widget.tickQueue;
+169:     widget.tickQueue = [];
+170:     todo.forEach(<span class="keyword">function</span>(<span class="variable-name">thunk</span>) { thunk.force(); });
+171: }
+172: 
+173: <span class="comment-delimiter">// </span><span class="comment">Now, here are the operations to build and modify widgets 
+</span>174: 
+175: <span class="keyword">function</span> mkText(<span class="variable-name">label</span>) {
+176:     <span class="keyword">return</span> (<span class="keyword">function</span> () { 
+177:         <span class="keyword">let</span> <span class="variable-name">text</span> = document.createTextNode(label);
+178:         <span class="keyword">let</span> <span class="variable-name">span</span> = document.createElement(<span class="string">"span"</span>);
+179:         span.appendChild(text);
+180:         span.tickQueue = [];
+181:         span.maybeText = text;
+182:         <span class="keyword">return</span> span;
+183:     });
+184: }
+185: 
+186: <span class="keyword">function</span> mkButton() {
+187:     <span class="keyword">let</span> <span class="variable-name">b</span> = document.createElement(<span class="string">"button"</span>);
+188:     b.tickQueue = [];
+189:     b.maybeText = <span class="constant">false</span>;
+190:     <span class="keyword">return</span> b;
+191: }
+192: 
+193: 
+194: <span class="keyword">function</span> hbox() {
+195:     <span class="keyword">let</span> <span class="variable-name">elt</span> = document.createElement(<span class="string">"div"</span>);
+196:     elt.style.display=<span class="string">"block"</span>;
+197:     elt.maybeText = <span class="constant">false</span>;
+198:     elt.tickQueue = [];
+199:     <span class="keyword">return</span> elt;
+200: }
+201: 
+202: <span class="keyword">function</span> vbox() { 
+203:     <span class="keyword">let</span> <span class="variable-name">elt</span> = document.createElement(<span class="string">"div"</span>);
+204:     elt.style.display=<span class="string">'inline'</span>;
+205:     elt.maybeText = <span class="constant">false</span>;
+206:     elt.tickQueue = [];
+207:     <span class="keyword">return</span> elt;
+208: }    
+209: 
+210: <span class="keyword">function</span> attachOp(<span class="variable-name">args</span>) {
+211:     <span class="keyword">let</span> <span class="variable-name">w1</span> = args[0];
+212:     <span class="keyword">let</span> <span class="variable-name">w2</span> = args[1];
+213:     w1.appendChild(w2);
+214:     <span class="keyword">return</span> w1;
+215: }
+216: 
+217: <span class="keyword">function</span> attach() {
+218:     <span class="keyword">return</span> attachOp;
+219: }
+220: 
+221: 
+222: <span class="comment-delimiter">//////////////// </span><span class="comment">Splitting and merging widgets ////////////////
+</span>223: <span class="comment-delimiter">//</span><span class="comment">
+</span>224: <span class="comment-delimiter">// </span><span class="comment">Both the frame type and the widget type are represented by DOM
+</span>225: <span class="comment-delimiter">// </span><span class="comment">nodes. However, when we join a frame and its future thunk, we 
+</span>226: <span class="comment-delimiter">// </span><span class="comment">push that thunk onto the list of actions for the widget. This
+</span>227: <span class="comment-delimiter">// </span><span class="comment">lets us update the node when a tick happens. 
+</span>228: 
+229: <span class="keyword">function</span> splitOp(<span class="variable-name">widget</span>) {
+230:     <span class="keyword">return</span> [widget, <span class="keyword">new</span> <span class="type">Lazy</span>(<span class="keyword">function</span> () { <span class="keyword">return</span> widget; })];
+231: }
+232: 
+233: <span class="keyword">function</span> split() {
+234:     <span class="keyword">return</span> splitOp;
+235: }
+236: 
+237: <span class="keyword">function</span> mergeOp(<span class="variable-name">args</span>) {
+238:     <span class="keyword">let</span> <span class="variable-name">w0</span> = args[0];
+239:     <span class="keyword">let</span> <span class="variable-name">wlazy</span> = args[1];
+240:     w0.tickQueue.push(wlazy);
+241:     <span class="keyword">return</span> w0;
+242: }
+243: 
+244: <span class="keyword">function</span> merge() {
+245:     <span class="keyword">return</span> mergeOp;
+246: }
+247: 
+248: 
+249: <span class="comment-delimiter">//////////////// </span><span class="comment">Operations to modify widgets ////////////////
+</span>250: 
+251: <span class="keyword">function</span> text(<span class="variable-name">txt</span>) {
+252:     <span class="keyword">return</span> (<span class="keyword">function</span> () {
+253:         <span class="keyword">return</span> (<span class="keyword">function</span> (<span class="variable-name">widget</span>) {
+254:             <span class="keyword">let</span> <span class="variable-name">new_text</span> = document.createTextNode(txt);
+255:             <span class="keyword">if</span> (widget.maybeText) {
+256:                 widget.replaceChild(new_text, widget.maybeText);
+257:             } <span class="keyword">else</span> {
+258:                 widget.appendChild(new_text);
+259:             }
+260:             widget.maybeText = new_text;
+261:             <span class="keyword">return</span> widget;
+262:         });
+263:     });
+264: }
+265: 
+266: <span class="keyword">function</span> color(<span class="variable-name">colorname</span>) {
+267:     <span class="keyword">return</span> (<span class="keyword">function</span> () {
+268:         <span class="keyword">return</span> (<span class="keyword">function</span> (<span class="variable-name">widget</span>) {
+269:             widget.style.color = colorname;
+270:             <span class="keyword">return</span> widget;
+271:         });
+272:     });
+273: }
+274: 
+275: <span class="keyword">function</span> backgroundColor(<span class="variable-name">colorname</span>) {
+276:     <span class="keyword">return</span> (<span class="keyword">function</span> () {
+277:         <span class="keyword">return</span> (<span class="keyword">function</span> (<span class="variable-name">widget</span>) {
+278:             widget.style.color = colorname;
+279:             <span class="keyword">return</span> widget;
+280:         });
+281:     });
+282: }
+283: 
+284: 
+285: <span class="keyword">function</span> font(<span class="variable-name">fontname</span>) {
+286:     <span class="keyword">return</span> (<span class="keyword">function</span> () {
+287:         <span class="keyword">return</span> (<span class="keyword">function</span> (<span class="variable-name">widget</span>) {
+288:             widget.style.font = fontname;
+289:             <span class="keyword">return</span> widget;
+290:         });
+291:     });
+292: }
+293: 
+294: <span class="keyword">function</span> fontFamily(<span class="variable-name">family</span>) {
+295:     <span class="keyword">return</span> (<span class="keyword">function</span> () {
+296:         <span class="keyword">return</span> (<span class="keyword">function</span> (<span class="variable-name">widget</span>) {
+297:             widget.style.fontFamily = family;
+298:             <span class="keyword">return</span> widget;
+299:         });
+300:     });
+301: }
+302: 
+303: <span class="keyword">function</span> width(<span class="variable-name">w</span>) {
+304:     <span class="keyword">return</span> (<span class="keyword">function</span> () {
+305:         <span class="keyword">return</span> (<span class="keyword">function</span> (<span class="variable-name">widget</span>) {
+306:             widget.style.width = w;
+307:             <span class="keyword">return</span> widget;
+308:         });
+309:     });
+310: }
+311: 
+312: 
+313: <span class="comment-delimiter">//////////////// </span><span class="comment">Events 
+</span>314: <span class="comment-delimiter">//</span><span class="comment">
+</span>315: <span class="comment-delimiter">// </span><span class="comment">Events work by taking a widget, and attaching a listener for an event
+</span>316: <span class="comment-delimiter">// </span><span class="comment">to it. For linearity's sake we return the argument as well. 
+</span>317: 
+318: <span class="keyword">function</span> clicksOp (<span class="variable-name">elt</span>) {
+319:     <span class="keyword">let</span> <span class="variable-name">bs</span> = booleanEventStream(<span class="keyword">function</span>(<span class="variable-name">f</span>) { elt.addEventListener(<span class="string">"click"</span>, f, <span class="constant">false</span>); });
+320:     <span class="keyword">return</span> [elt, bs];
+321: }
+322: 
+323: <span class="keyword">function</span> clicks(<span class="variable-name">$alloc</span>) {
+324:     <span class="keyword">return</span> Thunk(<span class="keyword">function</span>() { <span class="keyword">return</span> clicksOp; });
+325: }
+326: 
+327: <span class="keyword">function</span> mouseOverOp (<span class="variable-name">elt</span>) {
+328:     <span class="keyword">let</span> <span class="variable-name">bs</span> = booleanEventStream(<span class="keyword">function</span>(<span class="variable-name">f</span>) { elt.addEventListener(<span class="string">"mouseover"</span>, f, <span class="constant">false</span>); });
+329:     <span class="keyword">return</span> [elt, bs];
+330: }
+331: 
+332: <span class="keyword">function</span> mouseover(<span class="variable-name">$alloc</span>) {
+333:     <span class="keyword">return</span> Thunk(<span class="keyword">function</span> (){ <span class="keyword">return</span> mouseOverOp; } );
+334: }
+335: 
+336: <span class="keyword">function</span> keypressOp (<span class="variable-name">elt</span>) {
+337:     <span class="keyword">let</span> <span class="variable-name">ks</span> = keyboardEventStream(<span class="keyword">function</span> (<span class="variable-name">f</span>) { elt.addEventListener(<span class="string">"keypress"</span>, f, <span class="constant">false</span>); });
+338:     <span class="keyword">return</span> [elt, ks];
+339: }
+340: 
+341: <span class="keyword">function</span> keypress(<span class="variable-name">$alloc</span>) {
+342:     <span class="keyword">return</span> Thunk(<span class="keyword">function</span> (){ <span class="keyword">return</span> keypressOp; } );
+343: }
+344: 
+345: <span class="comment-delimiter">////////////////</span><span class="comment">
+</span>346: 
+347: <span class="keyword">function</span> mkAlloc() { 
+348:     <span class="keyword">return</span> lazyfix(<span class="keyword">function</span> (<span class="variable-name">allocs</span>) {
+349:         <span class="keyword">return</span> <span class="keyword">new</span> <span class="type">Cons</span>(<span class="string">"alloc"</span>, allocs);
+350:     });
+351: }
+352: 
+353: <span class="comment-delimiter">////////////////</span><span class="comment">
+</span>354: 
+355: <span class="keyword">function</span> repeat(<span class="variable-name">thunk</span>, <span class="variable-name">n</span>) {
+356:     <span class="keyword">function</span> repeater() { 
+357:       thunk();
+358:       window.setTimeout(repeater, n);
+359:     }
+360:     window.setTimeout(repeater, n);
+361: }
+362: 
+363: <span class="keyword">function</span> $start(<span class="variable-name">app_root</span>, <span class="variable-name">app</span>) {
+364:     <span class="keyword">let</span> <span class="variable-name">widget</span> = app();
+365:     document.getElementById(app_root).appendChild(widget);
+366:     repeat(<span class="keyword">function</span> () { $step(widget); }, 25);
+367: }
+</pre>
+  </body>
+</html>
