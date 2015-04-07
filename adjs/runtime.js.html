@@ -374,8 +374,8 @@
 320:     <span class="keyword">return</span> [elt, bs];
 321: }
 322: 
-323: <span class="keyword">function</span> clicks(<span class="variable-name">$alloc</span>) {
-324:     <span class="keyword">return</span> Thunk(<span class="keyword">function</span>() { <span class="keyword">return</span> clicksOp; });
+323: <span class="keyword">function</span> clicks() {
+324:     <span class="keyword">return</span> clicksOp;
 325: }
 326: 
 327: <span class="keyword">function</span> mouseOverOp (<span class="variable-name">elt</span>) {
@@ -383,8 +383,8 @@
 329:     <span class="keyword">return</span> [elt, bs];
 330: }
 331: 
-332: <span class="keyword">function</span> mouseover(<span class="variable-name">$alloc</span>) {
-333:     <span class="keyword">return</span> Thunk(<span class="keyword">function</span> (){ <span class="keyword">return</span> mouseOverOp; } );
+332: <span class="keyword">function</span> mouseover() {
+333:     <span class="keyword">return</span> mouseOverOp;
 334: }
 335: 
 336: <span class="keyword">function</span> keypressOp (<span class="variable-name">elt</span>) {
@@ -392,33 +392,26 @@
 338:     <span class="keyword">return</span> [elt, ks];
 339: }
 340: 
-341: <span class="keyword">function</span> keypress(<span class="variable-name">$alloc</span>) {
-342:     <span class="keyword">return</span> Thunk(<span class="keyword">function</span> (){ <span class="keyword">return</span> keypressOp; } );
+341: <span class="keyword">function</span> keypress() {
+342:     <span class="keyword">return</span> keypressOp;
 343: }
 344: 
-345: <span class="comment-delimiter">////////////////</span><span class="comment">
-</span>346: 
-347: <span class="keyword">function</span> mkAlloc() { 
-348:     <span class="keyword">return</span> lazyfix(<span class="keyword">function</span> (<span class="variable-name">allocs</span>) {
-349:         <span class="keyword">return</span> <span class="keyword">new</span> <span class="type">Cons</span>(<span class="string">"alloc"</span>, allocs);
-350:     });
-351: }
-352: 
-353: <span class="comment-delimiter">////////////////</span><span class="comment">
-</span>354: 
-355: <span class="keyword">function</span> repeat(<span class="variable-name">thunk</span>, <span class="variable-name">n</span>) {
-356:     <span class="keyword">function</span> repeater() { 
-357:       thunk();
-358:       window.setTimeout(repeater, n);
-359:     }
-360:     window.setTimeout(repeater, n);
-361: }
-362: 
-363: <span class="keyword">function</span> $start(<span class="variable-name">app_root</span>, <span class="variable-name">app</span>) {
-364:     <span class="keyword">let</span> <span class="variable-name">widget</span> = app();
-365:     document.getElementById(app_root).appendChild(widget);
-366:     repeat(<span class="keyword">function</span> () { $step(widget); }, 25);
-367: }
+345: 
+346: <span class="comment-delimiter">////////////////</span><span class="comment">
+</span>347: 
+348: <span class="keyword">function</span> repeat(<span class="variable-name">thunk</span>, <span class="variable-name">n</span>) {
+349:     <span class="keyword">function</span> repeater() { 
+350:       thunk();
+351:       window.setTimeout(repeater, n);
+352:     }
+353:     window.setTimeout(repeater, n);
+354: }
+355: 
+356: <span class="keyword">function</span> $start(<span class="variable-name">app_root</span>, <span class="variable-name">app</span>) {
+357:     <span class="keyword">let</span> <span class="variable-name">widget</span> = app();
+358:     document.getElementById(app_root).appendChild(widget);
+359:     repeat(<span class="keyword">function</span> () { $step(widget); }, 25);
+360: }
 </pre>
   </body>
 </html>

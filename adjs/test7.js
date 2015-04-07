@@ -131,279 +131,246 @@ let step = function (e$51_2){
   };
 };
 let states = lazyfix(function (states$98_2){
-                       return function (qs$100_3){
-                         let u$101_4 = qs$100_3.head();
-                         let us$102_6 = qs$100_3.tail();
-                         return function (state$103_8){
-                           return function (events$104_9){
-                             let e$105_10 = events$104_9.head();
-                             let es$106_12 = events$104_9.tail();
-                             let u$111_14 = step(e$105_10)(state$103_8);
-                             let state$112_19 = u$111_14;
-                             return new Cons(state$112_19,
-                                             new Lazy(function (){
-                                                        let us$102_22 = us$102_6.force();
-                                                        let states$98_24 = states$98_2.force();
-                                                        let es$106_26 = es$106_12.force();
-                                                        return states$98_24(us$102_22)(state$112_19)(es$106_26);
-                                                      }));
+                       return function (state$100_3){
+                         return function (events$101_4){
+                           let e$102_5 = events$101_4.head();
+                           let es$103_7 = events$101_4.tail();
+                           let u$108_9 = function (){
+                             return step(e$102_5)(state$100_3);
                            };
+                           let state$109_14 = u$108_9();
+                           return new Cons(state$109_14,
+                                           new Lazy(function (){
+                                                      let states$98_18 = states$98_2.force();
+                                                      let es$103_20 = es$103_7.force();
+                                                      return states$98_18(state$109_14)(es$103_20);
+                                                    }));
                          };
                        };
                      });
-let ints = lazyfix(function (ints$113_2){
-                     return function (qs$115_3){
-                       let u$116_4 = qs$115_3.head();
-                       let us$117_6 = qs$115_3.tail();
-                       return function (n$118_8){
-                         return new Cons(n$118_8,
-                                         new Lazy(function (){
-                                                    let us$117_11 = us$117_6.force();
-                                                    let ints$113_13 = ints$113_2.force();
-                                                    return ints$113_13(us$117_11)(n$118_8 + 1.);
-                                                  }));
-                       };
+let ints = lazyfix(function (ints$110_2){
+                     return function (n$112_3){
+                       return new Cons(n$112_3,
+                                       new Lazy(function (){
+                                                  let ints$110_6 = ints$110_2.force();
+                                                  return ints$110_6(n$112_3 + 1.);
+                                                }));
                      };
                    });
-let stackToString = function stackToString$119_2(ns$120_3){
+let stackToString = function stackToString$113_2(ns$114_3){
   while (true) {
-    let ns$120_4 = ns$120_3;
-    let list$121_5 = ns$120_4;
-    switch (list$121_5[0]) {
+    let ns$114_4 = ns$114_3;
+    let list$115_5 = ns$114_4;
+    switch (list$115_5[0]) {
       case "Nil":
-        let p$122_7 = list$121_5[1];
+        let p$116_7 = list$115_5[1];
         return "--";
       
       case "Cons":
-        let p$123_8 = list$121_5[1];
-        let n$124_9 = p$123_8[0];
-        let xs$125_11 = p$123_8[1];
-        switch (xs$125_11[0]) {
+        let p$117_8 = list$115_5[1];
+        let n$118_9 = p$117_8[0];
+        let xs$119_11 = p$117_8[1];
+        switch (xs$119_11[0]) {
           case "Nil":
-            let p$126_14 = xs$125_11[1];
-            return toString(n$124_9);
+            let p$120_14 = xs$119_11[1];
+            return toString(n$118_9);
           
           case "Cons":
-            let p$127_17 = xs$125_11[1];
-            let m$128_18 = n$124_9;
-            return cat([toString(m$128_18), cat(["  ", stackToString$119_2(xs$125_11)])]);
+            let p$121_17 = xs$119_11[1];
+            let m$122_18 = n$118_9;
+            return cat([toString(m$122_18), cat(["  ", stackToString$113_2(xs$119_11)])]);
           }
       }
   }
 };
-let map = lazyfix(function (map$139_2){
-                    return function (st$149_3){
-                      let f$150_4 = st$149_3;
-                      return function (qs$151_5){
-                        let u$152_6 = qs$151_5.head();
-                        let us$153_8 = qs$151_5.tail();
-                        return function (us$154_10){
-                          let x$155_11 = us$154_10.head();
-                          let xs$156_13 = us$154_10.tail();
-                          return new Cons(f$150_4(x$155_11),
-                                          new Lazy(function (){
-                                                     let xs$156_19 = xs$156_13.force();
-                                                     let us$153_21 = us$153_8.force();
-                                                     let map$139_23 = map$139_2.force();
-                                                     return map$139_23(f$150_4)(us$153_21)(xs$156_19);
-                                                   }));
-                        };
+let map = lazyfix(function (map$133_2){
+                    return function (st$143_3){
+                      let f$144_4 = st$143_3();
+                      return function (us$145_6){
+                        let x$146_7 = us$145_6.head();
+                        let xs$147_9 = us$145_6.tail();
+                        return new Cons(f$144_4(x$146_7),
+                                        new Lazy(function (){
+                                                   let xs$147_15 = xs$147_9.force();
+                                                   let map$133_17 = map$133_2.force();
+                                                   return map$133_17(function (){
+                                                                       return f$144_4;
+                                                                     })(xs$147_15);
+                                                 }));
                       };
                     };
                   });
-let zip = lazyfix(function (zip$179_2){
-                    return function (qs$189_3){
-                      let u$190_4 = qs$189_3.head();
-                      let us$191_6 = qs$189_3.tail();
-                      return function (us$192_8){
-                        let a$193_9 = us$192_8.head();
-                        let as$194_11 = us$192_8.tail();
-                        return function (us$195_13){
-                          let b$196_14 = us$195_13.head();
-                          let bs$197_16 = us$195_13.tail();
-                          return new Cons([a$193_9, b$196_14],
-                                          new Lazy(function (){
-                                                     let zip$179_22 = zip$179_2.force();
-                                                     let us$191_24 = us$191_6.force();
-                                                     let bs$197_26 = bs$197_16.force();
-                                                     let as$194_28 = as$194_11.force();
-                                                     return zip$179_22(us$191_24)(as$194_28)(bs$197_26);
-                                                   }));
-                        };
+let zip = lazyfix(function (zip$170_2){
+                    return function (us$180_3){
+                      let a$181_4 = us$180_3.head();
+                      let as$182_6 = us$180_3.tail();
+                      return function (us$183_8){
+                        let b$184_9 = us$183_8.head();
+                        let bs$185_11 = us$183_8.tail();
+                        return new Cons([a$181_4, b$184_9],
+                                        new Lazy(function (){
+                                                   let zip$170_17 = zip$170_2.force();
+                                                   let bs$185_19 = bs$185_11.force();
+                                                   let as$182_21 = as$182_6.force();
+                                                   return zip$170_17(as$182_21)(bs$185_19);
+                                                 }));
                       };
                     };
                   });
-let unfold = lazyfix(function (unfold$219_2){
-                       return function (st$229_3){
-                         let f$230_4 = st$229_3;
-                         return function (qs$231_5){
-                           let u$232_6 = qs$231_5.head();
-                           let us$233_8 = qs$231_5.tail();
-                           return function (seed$234_10){
-                             let p$235_11 = f$230_4(u$232_6)(seed$234_10);
-                             let b$236_16 = p$235_11[0];
-                             let d$237_18 = p$235_11[1];
-                             let seed$238_20 = d$237_18;
-                             return new Cons(b$236_16,
-                                             new Lazy(function (){
-                                                        let us$233_23 = us$233_8.force();
-                                                        let unfold$219_25 = unfold$219_2.force();
-                                                        let seed$238_27 = seed$238_20.force();
-                                                        return unfold$219_25(f$230_4)(us$233_23)(seed$238_27);
-                                                      }));
-                           };
+let unfold = lazyfix(function (unfold$207_2){
+                       return function (st$217_3){
+                         let f$218_4 = st$217_3();
+                         return function (seed$219_6){
+                           let p$220_7 = f$218_4(seed$219_6);
+                           let b$221_10 = p$220_7[0];
+                           let d$222_12 = p$220_7[1];
+                           let seed$223_14 = d$222_12;
+                           return new Cons(b$221_10,
+                                           new Lazy(function (){
+                                                      let unfold$207_17 = unfold$207_2.force();
+                                                      let seed$223_19 = seed$223_14.force();
+                                                      return unfold$207_17(function (){
+                                                                             return f$218_4;
+                                                                           })(seed$223_19);
+                                                    }));
                          };
                        };
                      });
-let mux = function (us$251_2){
-  return function (es1$252_3){
-    return function (es2$253_4){
-      return map(choose)(us$251_2)(zip(us$251_2)(es1$252_3)(es2$253_4));
-    };
+let mux = function (es1$236_2){
+  return function (es2$237_3){
+    return map(function (){
+                 return choose;
+               })(zip(es1$236_2)(es2$237_3));
   };
 };
-let button = function (us$289_2){
-  return function (label$293_3){
-    return function (e$297_4){
-      return function (){
-        let w$309_5 = mkButton();
-        let w$323_7 = text(label$293_3)()(w$309_5);
-        let w$341_13 = width("4em")()(w$323_7);
-        let t$363_19 = clicks(us$289_2)()(w$341_13);
-        let w$364_25 = t$363_19[0];
-        let i$365_27 = t$363_19[1];
-        let bs$366_29 = i$365_27;
-        return [w$364_25,
-                map(function (b$411_36){
-                      if (b$411_36) {
-                        return e$297_4;
+let button = function (label$273_2){
+  return function (e$277_3){
+    return function (){
+      let w$289_4 = mkButton();
+      let w$303_6 = text(label$273_2)()(w$289_4);
+      let w$321_12 = width("4em")()(w$303_6);
+      let t$338_18 = clicks()(w$321_12);
+      let w$339_22 = t$338_18[0];
+      let i$340_24 = t$338_18[1];
+      let bs$341_26 = i$340_24;
+      return [w$339_22,
+              map(function (){
+                    return function (b$386_32){
+                      if (b$386_32) {
+                        return e$277_3;
                       } else {
                         return ["Nothing", []];
                       }
-                    })(us$289_2)(bs$366_29)];
-      };
+                    };
+                  })(bs$341_26)];
     };
   };
 };
-let numeric = function (us$413_2){
-  return function (n$417_3){
-    return button(us$413_2)(toString(n$417_3))(["Digit", n$417_3]);
-  };
+let numeric = function (n$388_2){
+  return button(toString(n$388_2))(["Digit", n$388_2]);
 };
-let panel = function (us$454_2){
-  return function (mkBox$473_3){
-    return function (p$489_4){
-      let b1$502_5 = p$489_4[0];
-      let b2$503_7 = p$489_4[1];
-      let b3$504_9 = p$489_4[2];
-      let b4$505_11 = p$489_4[3];
-      return function (){
-        let box$517_13 = mkBox$473_3();
-        let t$524_15 = b1$502_5();
-        let w1$526_17 = t$524_15[0];
-        let i$527_19 = t$524_15[1];
-        let es1$528_21 = i$527_19;
-        let t$535_22 = b2$503_7();
-        let w2$537_24 = t$535_22[0];
-        let i$538_26 = t$535_22[1];
-        let es2$539_28 = i$538_26;
-        let t$546_29 = b3$504_9();
-        let w3$548_31 = t$546_29[0];
-        let i$549_33 = t$546_29[1];
-        let es3$550_35 = i$549_33;
-        let t$557_36 = b4$505_11();
-        let w4$559_38 = t$557_36[0];
-        let i$560_40 = t$557_36[1];
-        let es4$561_42 = i$560_40;
-        let box$582_43 = attach()([box$517_13, w1$526_17]);
-        let box$615_49 = attach()([box$582_43, w2$537_24]);
-        let box$660_55 = attach()([box$615_49, w3$548_31]);
-        let box$717_61 = attach()([box$660_55, w4$559_38]);
-        return [box$717_61, mux(us$454_2)(es1$528_21)(mux(us$454_2)(es2$539_28)(mux(us$454_2)(es3$550_35)(es4$561_42)))];
-      };
-    };
-  };
-};
-let inputPanel = function (us$754_2){
-  return panel(us$754_2)(vbox)([panel(us$754_2)(hbox)([numeric(us$754_2)(7.),
-                                                       numeric(us$754_2)(8.),
-                                                       numeric(us$754_2)(9.),
-                                                       button(us$754_2)("x")(["BinOp",
-                                                                              function (a$988_39){
-                                                                                return function (b$989_40){
-                                                                                  return a$988_39 * b$989_40;
-                                                                                };
-                                                                              }])]),
-                                panel(us$754_2)(hbox)([numeric(us$754_2)(4.),
-                                                       numeric(us$754_2)(5.),
-                                                       numeric(us$754_2)(6.),
-                                                       button(us$754_2)("+")(["BinOp",
-                                                                              function (a$1192_73){
-                                                                                return function (b$1193_74){
-                                                                                  return a$1192_73 + b$1193_74;
-                                                                                };
-                                                                              }])]),
-                                panel(us$754_2)(hbox)([numeric(us$754_2)(1.), numeric(us$754_2)(2.), numeric(us$754_2)(3.), button(us$754_2)("Pop")(["Pop", []])]),
-                                panel(us$754_2)(hbox)([button(us$754_2)("+/-")(["UnOp",
-                                                                                function (n$1517_122){
-                                                                                  return 0. - n$1517_122;
-                                                                                }]),
-                                                       numeric(us$754_2)(0.),
-                                                       button(us$754_2)("C")(["Clear", []]),
-                                                       button(us$754_2)("Push")(["Push", []])])]);
-};
-let dynlabel = function (us$1666_2){
-  return function (ss$1670_3){
+let panel = function (mkBox$422_2){
+  return function (p$438_3){
+    let b1$451_4 = p$438_3[0];
+    let b2$452_6 = p$438_3[1];
+    let b3$453_8 = p$438_3[2];
+    let b4$454_10 = p$438_3[3];
     return function (){
-      let displayText$1743_4 = lazyfix(function (displayText$1683_5){
-                                         return function (i$1690_6){
-                                           let qs$1691_7 = i$1690_6;
-                                           let u$1692_8 = qs$1691_7.head();
-                                           let us$1693_10 = qs$1691_7.tail();
-                                           return function (i$1694_12){
-                                             let ss$1695_13 = i$1694_12;
-                                             let s$1696_14 = ss$1695_13.head();
-                                             let ss$1697_16 = ss$1695_13.tail();
-                                             return function (w$1698_18){
-                                               let w$1709_19 = text(s$1696_14)()(w$1698_18);
-                                               let t$1719_25 = split()(w$1709_19);
-                                               let w0$1720_29 = t$1719_25[0];
-                                               let d$1721_31 = t$1719_25[1];
-                                               let w1$1722_33 = d$1721_31;
-                                               return merge()([w0$1720_29,
-                                                               new Lazy(function (){
-                                                                          let w1$1722_39 = w1$1722_33.force();
-                                                                          let us$1693_41 = us$1693_10.force();
-                                                                          let ss$1697_43 = ss$1697_16.force();
-                                                                          let displayText$1683_45 = displayText$1683_5.force();
-                                                                          return displayText$1683_45(us$1693_41)(ss$1697_43)(w1$1722_39);
-                                                                        })]);
-                                             };
-                                           };
-                                         };
-                                       });
-      let w$1754_53 = mkText("")();
-      return displayText$1743_4(us$1666_2)(ss$1670_3)(w$1754_53);
+      let box$466_12 = mkBox$422_2();
+      let t$473_14 = b1$451_4();
+      let w1$475_16 = t$473_14[0];
+      let i$476_18 = t$473_14[1];
+      let es1$477_20 = i$476_18;
+      let t$484_21 = b2$452_6();
+      let w2$486_23 = t$484_21[0];
+      let i$487_25 = t$484_21[1];
+      let es2$488_27 = i$487_25;
+      let t$495_28 = b3$453_8();
+      let w3$497_30 = t$495_28[0];
+      let i$498_32 = t$495_28[1];
+      let es3$499_34 = i$498_32;
+      let t$506_35 = b4$454_10();
+      let w4$508_37 = t$506_35[0];
+      let i$509_39 = t$506_35[1];
+      let es4$510_41 = i$509_39;
+      let box$531_42 = attach()([box$466_12, w1$475_16]);
+      let box$564_48 = attach()([box$531_42, w2$486_23]);
+      let box$609_54 = attach()([box$564_48, w3$497_30]);
+      let box$666_60 = attach()([box$609_54, w4$508_37]);
+      return [box$666_60, mux(es1$477_20)(mux(es2$488_27)(mux(es3$499_34)(es4$510_41)))];
     };
   };
 };
-let main = function (us$1770_2){
+let inputPanel = panel(vbox)([panel(hbox)([numeric(7.),
+                                           numeric(8.),
+                                           numeric(9.),
+                                           button("x")(["BinOp",
+                                                        function (a$885_26){
+                                                          return function (b$886_27){
+                                                            return a$885_26 * b$886_27;
+                                                          };
+                                                        }])]),
+                              panel(hbox)([numeric(4.),
+                                           numeric(5.),
+                                           numeric(6.),
+                                           button("+")(["BinOp",
+                                                        function (a$1059_50){
+                                                          return function (b$1060_51){
+                                                            return a$1059_50 + b$1060_51;
+                                                          };
+                                                        }])]),
+                              panel(hbox)([numeric(1.), numeric(2.), numeric(3.), button("Pop")(["Pop", []])]),
+                              panel(hbox)([button("+/-")(["UnOp",
+                                                          function (n$1333_85){
+                                                            return 0. - n$1333_85;
+                                                          }]),
+                                           numeric(0.),
+                                           button("C")(["Clear", []]),
+                                           button("Push")(["Push", []])])]);
+let dynlabel = function (ss$1473_2){
   return function (){
-    let t$1782_3 = inputPanel(us$1770_2)();
-    let wpanel$1784_7 = t$1782_3[0];
-    let i$1785_9 = t$1782_3[1];
-    let events$1786_11 = i$1785_9;
-    let events$1791_14 = states(us$1770_2)(["Nil", []])(events$1786_11);
-    let labels$1808_22 = map(stackToString)(us$1770_2)(events$1791_14);
-    let wdisplay$1850_12 = dynlabel(us$1770_2)(labels$1808_22)();
-    let wdisplay$1864_33 = backgroundColor("rgb(60,60,60)")()(wdisplay$1850_12);
-    let wdisplay$1882_39 = fontFamily("monospace")()(wdisplay$1864_33);
-    let box$1894_45 = vbox();
-    let box$1927_47 = attach()([box$1894_45, wdisplay$1882_39]);
-    let box$1972_53 = attach()([box$1927_47, wpanel$1784_7]);
-    return box$1972_53;
+    let displayText$1541_3 = lazyfix(function (displayText$1486_4){
+                                       return function (i$1493_5){
+                                         let ss$1494_6 = i$1493_5;
+                                         let s$1495_7 = ss$1494_6.head();
+                                         let ss$1496_9 = ss$1494_6.tail();
+                                         return function (w$1497_11){
+                                           let w$1508_12 = text(s$1495_7)()(w$1497_11);
+                                           let t$1518_18 = split()(w$1508_12);
+                                           let w0$1519_22 = t$1518_18[0];
+                                           let d$1520_24 = t$1518_18[1];
+                                           let w1$1521_26 = d$1520_24;
+                                           return merge()([w0$1519_22,
+                                                           new Lazy(function (){
+                                                                      let w1$1521_32 = w1$1521_26.force();
+                                                                      let ss$1496_34 = ss$1496_9.force();
+                                                                      let displayText$1486_36 = displayText$1486_4.force();
+                                                                      return displayText$1486_36(ss$1496_34)(w1$1521_32);
+                                                                    })]);
+                                         };
+                                       };
+                                     });
+    let w$1552_42 = mkText("")();
+    return displayText$1541_3(ss$1473_2)(w$1552_42);
   };
 };
-let $main = function ($alloc){
-  return main($alloc);
+let main = function (){
+  let t$1572_2 = inputPanel();
+  let wpanel$1574_4 = t$1572_2[0];
+  let i$1575_6 = t$1572_2[1];
+  let events$1576_8 = i$1575_6;
+  let events$1581_11 = states(["Nil", []])(events$1576_8);
+  let labels$1598_17 = map(function (){
+                             return stackToString;
+                           })(events$1581_11);
+  let wdisplay$1634_9 = dynlabel(labels$1598_17)();
+  let wdisplay$1648_24 = backgroundColor("rgb(60,60,60)")()(wdisplay$1634_9);
+  let wdisplay$1666_30 = fontFamily("monospace")()(wdisplay$1648_24);
+  let box$1678_36 = vbox();
+  let box$1711_38 = attach()([box$1678_36, wdisplay$1666_30]);
+  let box$1756_44 = attach()([box$1711_38, wpanel$1574_4]);
+  return box$1756_44;
+};
+let $main = function (){
+  return main();
 };
