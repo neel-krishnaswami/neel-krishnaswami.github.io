@@ -234,6 +234,11 @@ function split() {
     return splitOp;
 }
 
+function mergePrim(w0, wlazy) {
+    w0.tickQueue.push(wlazy);
+    return w0;
+}
+
 function mergeOp(args) {
     let w0 = args[0];
     let wlazy = args[1];

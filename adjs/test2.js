@@ -58,41 +58,42 @@ let count = function (bs$72_2){
 };
 let dynlabel = function (msgs$88_2){
   return function (){
-    let update$120_3 = lazyfix(function (update$92_4){
+    let update$109_3 = lazyfix(function (update$92_4){
                                  return function (i$96_5){
                                    let ss$97_6 = i$96_5;
                                    let s$98_7 = ss$97_6.head();
                                    let ss$99_9 = ss$97_6.tail();
                                    return function (w$100_11){
                                      let w$102_12 = text(s$98_7)()(w$100_11);
-                                     let t$106_18 = split()(w$102_12);
-                                     let w0$107_22 = t$106_18[0];
-                                     let d$108_24 = t$106_18[1];
-                                     let w1$109_26 = d$108_24;
-                                     return merge()([w0$107_22,
-                                                     new Lazy(function (){
-                                                                let w1$109_32 = w1$109_26.force();
-                                                                let update$92_34 = update$92_4.force();
-                                                                let ss$99_36 = ss$99_9.force();
-                                                                return update$92_34(ss$99_36)(w1$109_32);
-                                                              })]);
+                                     let dom$103_18 = w$102_12;
+                                     let w0$104_19 = dom$103_18;
+                                     let w1$105_20 = new Lazy(function (){
+                                                                return dom$103_18;
+                                                              });
+                                     return mergePrim(w0$104_19,
+                                                      new Lazy(function (){
+                                                                 let w1$105_23 = w1$105_20.force();
+                                                                 let update$92_25 = update$92_4.force();
+                                                                 let ss$99_27 = ss$99_9.force();
+                                                                 return update$92_25(ss$99_27)(w1$105_23);
+                                                               }));
                                    };
                                  };
                                });
-    let w$122_42 = mkText("")();
-    return update$120_3(msgs$88_2)(w$122_42);
+    let w$111_33 = mkText("")();
+    return update$109_3(msgs$88_2)(w$111_33);
   };
 };
 let main = function (){
-  let w$131_2 = mkButton();
-  let t$133_4 = clicks()(w$131_2);
-  let w$134_8 = t$133_4[0];
-  let i$135_10 = t$133_4[1];
-  let bs$136_12 = i$135_10;
-  let w0$149_13 = dynlabel(map(function (){
+  let w$120_2 = mkButton();
+  let t$122_4 = clicks()(w$120_2);
+  let w$123_8 = t$122_4[0];
+  let i$124_10 = t$122_4[1];
+  let bs$125_12 = i$124_10;
+  let w0$138_13 = dynlabel(map(function (){
                                  return toString;
-                               })(count(bs$136_12)))();
-  return attach()([w$134_8, w0$149_13]);
+                               })(count(bs$125_12)))();
+  return attach()([w$123_8, w0$138_13]);
 };
 let $main = function (){
   return main();

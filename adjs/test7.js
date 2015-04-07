@@ -329,47 +329,48 @@ let inputPanel = panel(vbox)([panel(hbox)([numeric(7.),
                                            button("Push")(["Push", []])])]);
 let dynlabel = function (ss$1473_2){
   return function (){
-    let displayText$1541_3 = lazyfix(function (displayText$1486_4){
+    let displayText$1518_3 = lazyfix(function (displayText$1486_4){
                                        return function (i$1493_5){
                                          let ss$1494_6 = i$1493_5;
                                          let s$1495_7 = ss$1494_6.head();
                                          let ss$1496_9 = ss$1494_6.tail();
                                          return function (w$1497_11){
                                            let w$1508_12 = text(s$1495_7)()(w$1497_11);
-                                           let t$1518_18 = split()(w$1508_12);
-                                           let w0$1519_22 = t$1518_18[0];
-                                           let d$1520_24 = t$1518_18[1];
-                                           let w1$1521_26 = d$1520_24;
-                                           return merge()([w0$1519_22,
-                                                           new Lazy(function (){
-                                                                      let w1$1521_32 = w1$1521_26.force();
-                                                                      let ss$1496_34 = ss$1496_9.force();
-                                                                      let displayText$1486_36 = displayText$1486_4.force();
-                                                                      return displayText$1486_36(ss$1496_34)(w1$1521_32);
-                                                                    })]);
+                                           let dom$1509_18 = w$1508_12;
+                                           let w0$1510_19 = dom$1509_18;
+                                           let w1$1511_20 = new Lazy(function (){
+                                                                       return dom$1509_18;
+                                                                     });
+                                           return mergePrim(w0$1510_19,
+                                                            new Lazy(function (){
+                                                                       let w1$1511_23 = w1$1511_20.force();
+                                                                       let ss$1496_25 = ss$1496_9.force();
+                                                                       let displayText$1486_27 = displayText$1486_4.force();
+                                                                       return displayText$1486_27(ss$1496_25)(w1$1511_23);
+                                                                     }));
                                          };
                                        };
                                      });
-    let w$1552_42 = mkText("")();
-    return displayText$1541_3(ss$1473_2)(w$1552_42);
+    let w$1529_33 = mkText("")();
+    return displayText$1518_3(ss$1473_2)(w$1529_33);
   };
 };
 let main = function (){
-  let t$1572_2 = inputPanel();
-  let wpanel$1574_4 = t$1572_2[0];
-  let i$1575_6 = t$1572_2[1];
-  let events$1576_8 = i$1575_6;
-  let events$1581_11 = states(["Nil", []])(events$1576_8);
-  let labels$1598_17 = map(function (){
+  let t$1549_2 = inputPanel();
+  let wpanel$1551_4 = t$1549_2[0];
+  let i$1552_6 = t$1549_2[1];
+  let events$1553_8 = i$1552_6;
+  let events$1558_11 = states(["Nil", []])(events$1553_8);
+  let labels$1575_17 = map(function (){
                              return stackToString;
-                           })(events$1581_11);
-  let wdisplay$1634_9 = dynlabel(labels$1598_17)();
-  let wdisplay$1648_24 = backgroundColor("rgb(60,60,60)")()(wdisplay$1634_9);
-  let wdisplay$1666_30 = fontFamily("monospace")()(wdisplay$1648_24);
-  let box$1678_36 = vbox();
-  let box$1711_38 = attach()([box$1678_36, wdisplay$1666_30]);
-  let box$1756_44 = attach()([box$1711_38, wpanel$1574_4]);
-  return box$1756_44;
+                           })(events$1558_11);
+  let wdisplay$1611_9 = dynlabel(labels$1575_17)();
+  let wdisplay$1625_24 = backgroundColor("rgb(60,60,60)")()(wdisplay$1611_9);
+  let wdisplay$1643_30 = fontFamily("monospace")()(wdisplay$1625_24);
+  let box$1655_36 = vbox();
+  let box$1688_38 = attach()([box$1655_36, wdisplay$1643_30]);
+  let box$1733_44 = attach()([box$1688_38, wpanel$1551_4]);
+  return box$1733_44;
 };
 let $main = function (){
   return main();
