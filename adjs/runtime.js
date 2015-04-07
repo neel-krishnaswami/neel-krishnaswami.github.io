@@ -320,8 +320,8 @@ function clicksOp (elt) {
     return [elt, bs];
 }
 
-function clicks($alloc) {
-    return Thunk(function() { return clicksOp; });
+function clicks() {
+    return clicksOp;
 }
 
 function mouseOverOp (elt) {
@@ -329,8 +329,8 @@ function mouseOverOp (elt) {
     return [elt, bs];
 }
 
-function mouseover($alloc) {
-    return Thunk(function (){ return mouseOverOp; } );
+function mouseover() {
+    return mouseOverOp;
 }
 
 function keypressOp (elt) {
@@ -338,17 +338,10 @@ function keypressOp (elt) {
     return [elt, ks];
 }
 
-function keypress($alloc) {
-    return Thunk(function (){ return keypressOp; } );
+function keypress() {
+    return keypressOp;
 }
 
-////////////////
-
-function mkAlloc() { 
-    return lazyfix(function (allocs) {
-        return new Cons("alloc", allocs);
-    });
-}
 
 ////////////////
 
