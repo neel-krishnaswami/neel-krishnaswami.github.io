@@ -214,7 +214,7 @@ move (suc n) boxa = boxa
 
 -- We can also define fixed points. This is defined by
 -- induction on the time index, and the extra parameters
--- (the □Γ) has to be box'd because it has to b used at
+-- (the □Γ) have to be box'd because it has to b used at
 -- many different times. 
 
 fix : {Γ B : Obj} → Hom ((□ Γ ⊗ • B), B) → Hom(□ Γ , B)
@@ -409,14 +409,14 @@ data term : context → type → time → Set where
 -- interpret a type paired with a time. 
 
 [_]-hyp : type × time → Obj
-[ A , Now ]-hyp = [ A ]-type
+[ A , Now ]-hyp    = [ A ]-type
 [ A , Always ]-hyp = □ [ A ]-type
-[ A , Later ]-hyp = • [ A ]-type
+[ A , Later ]-hyp  = • [ A ]-type
 
 -- A context is interpreted as a nested tuple of types. 
 
 [_]-ctx : context → Obj
-[ [] ]-ctx = I
+[ [] ]-ctx         = I
 [ Γ , A at q ]-ctx = [ Γ ]-ctx ⊗ [ A , q ]-hyp 
 
 -- The later-ctx function shows there is a map from the interpretation
@@ -426,7 +426,7 @@ data term : context → type → time → Set where
 -- later nested tuple. 
 
 later-ctx : (Γ : context) → Hom([ Γ ]-ctx , • [ later Γ ]-ctx)
-later-ctx []                 = •-ε
+later-ctx []                = •-ε
 later-ctx (Γ , A at Now)    = fst · later-ctx Γ
 later-ctx (Γ , A at Later)  = (later-ctx Γ  ⊗' id) · •-φ
 later-ctx (Γ , A at Always) = (later-ctx Γ ⊗' move) · •-φ
@@ -438,7 +438,7 @@ later-ctx (Γ , A at Always) = (later-ctx Γ ⊗' move) · •-φ
 -- always hypotheses into a single always nested tuple.
 
 always-ctx : (Γ : context) → Hom([ Γ ]-ctx , □ [ always Γ ]-ctx)
-always-ctx []                 = □-ε
+always-ctx []                = □-ε
 always-ctx (Γ , A at Now)    = fst · always-ctx Γ
 always-ctx (Γ , A at Later)  = fst · always-ctx Γ
 always-ctx (Γ , A at Always) = (always-ctx Γ ⊗' δ) · □-φ
@@ -453,7 +453,7 @@ always-ctx (Γ , A at Always) = (always-ctx Γ ⊗' δ) · □-φ
 -- the right component with snd. 
 
 interp-variable : {Γ : context} {A : type} {q : time} → variable Γ A q → Hom([ Γ ]-ctx , [ A , q ]-hyp)
-interp-variable var-z = snd 
+interp-variable var-z     = snd 
 interp-variable (var-s x) = fst · interp-variable x
 
 -- We use variable intepretation as a subroutine to interpret the
